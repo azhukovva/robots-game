@@ -1,6 +1,7 @@
 package vut.ija2023;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
@@ -11,10 +12,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.Node;
 import javafx.util.Duration;
+import vut.ija2023.common.AbstractRobot;
 import vut.ija2023.common.Environment;
 import vut.ija2023.common.Robot;
+import vut.ija2023.common.NotifyMessage;
 import vut.ija2023.enviroment.Position;
 import vut.ija2023.room.ControlledRobot;
 import vut.ija2023.room.Room;
@@ -23,6 +25,9 @@ import java.io.InputStream;
 import java.util.Random;
 
 public class HelloController {
+
+
+    private List<NotifyMessage> messagesList;
 
     private Timeline timeline;
 
@@ -189,5 +194,9 @@ public class HelloController {
     }
     @FXML
     public void onMoveLeft(ActionEvent actionEvent) {
+    }
+
+    public void addMessage(Position pos, AbstractRobot abstractRobot, String type) {
+        messagesList.add(new NotifyMessage(pos, abstractRobot, type));
     }
 }

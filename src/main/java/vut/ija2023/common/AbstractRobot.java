@@ -8,8 +8,8 @@ public abstract class AbstractRobot implements Robot {
     public AbstractRobot(HelloController controller) {
         this.controller = controller;
     }
-    private void notifyController(Position pos, ) {
-        controller.notify(());
+    private void notifyController(Position pos, String type ) {
+        controller.addMessage(pos, this,  type);
     }
 
 }
