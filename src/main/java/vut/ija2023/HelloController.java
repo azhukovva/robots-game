@@ -18,6 +18,7 @@ import vut.ija2023.enviroment.Position;
 import vut.ija2023.room.ControlledRobot;
 import vut.ija2023.room.Room;
 
+
 import java.io.InputStream;
 import java.util.Random;
 
@@ -202,7 +203,7 @@ public class HelloController {
     public void onMoveLeft(ActionEvent actionEvent) {
     }
 
-    public void addMessage(Position pos, AbstractRobot abstractRobot, String type) {
+    public void addMessage(Position pos, AbstractRobot abstractRobot, Log.MovementType type) {
         messagesList.add(new NotifyMessage(pos, abstractRobot, type));
     }
 

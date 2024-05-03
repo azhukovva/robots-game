@@ -17,7 +17,7 @@ public class Logger {
     public void handleMessage(NotifyMessage notifyMessage) {
         Position pos = notifyMessage.getPos();
         Robot robot = notifyMessage.getRobot();
-        String message = notifyMessage.getMessage();
+        MovementType message = notifyMessage.getMessage();
 
         // Check if the robot already has messages stored
         if (!robotMessages.containsKey(robot)) {
@@ -25,53 +25,21 @@ public class Logger {
             messages.add(new Log(1, pos, null)); // Assuming null for the initial movement type
             robotMessages.put(robot, messages); // to messages array
             previousMovementType.put(robot, null);
-
-            MovementType currentType = getMovementType(message);
-            switch (currentType){
-                case MOVE:
-                    break;
-                case TURN:
-                    break;
-                case WAIT:
-                    break;
-            }
         }
-        // NEW ROBOT
+        // OLD ROBOT
         else {
             List<Log> messages = robotMessages.get(robot); // the list of messages for the robot
             int stepCount = messages.size() + 1;
 
             MovementType prevType = previousMovementType.get(robot);
-            MovementType currentType = getMovementType(message);
-            if (currentType == prevType) {
+            if (message == prevType) {
                 messages.get(messages.size() - 1).setStepCount(stepCount);
             }
             else {
-                messages.add(new Log(stepCount, pos, currentType));
-            }
-            switch (currentType){
-                case MOVE:
-                    break;
-                case TURN:
-                    break;
-                case WAIT:
-                    break;
+                messages.add(new Log(stepCount, pos, message));
+                previousMovementType.put(robot, message);
             }
         }
-    }
-
-    // Helper method to extract the movement type from the message
-    private MovementType getMovementType(String message) {
-        String[] messageContent = message.split(" ");
-        return switch (messageContent[0].toUpperCase()) {
-            case "MOVE" -> MovementType.MOVE;
-            case "TURN" -> MovementType.TURN;
-            case "WAIT" -> MovementType.WAIT;
-            default ->
-                // does not match any known movement type, return null
-                    null;
-        };
-
     }
 }
 
