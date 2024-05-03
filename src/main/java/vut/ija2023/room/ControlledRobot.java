@@ -1,20 +1,24 @@
 package vut.ija2023.room;
 
+import javafx.scene.image.ImageView;
+import vut.ija2023.HelloController;
+import vut.ija2023.common.AbstractRobot;
 import vut.ija2023.common.Environment;
 import vut.ija2023.common.Robot;
 import vut.ija2023.enviroment.Position;
 
-public class ControlledRobot implements Robot {
+public class ControlledRobot extends AbstractRobot implements Robot {
     private Position position;
     private Environment environment;
     private int angle = 0;
 
-    private ControlledRobot(Environment env, Position pos) {
+    private ControlledRobot(Environment env, Position pos, HelloController controller, ImageView view) {
+        super(controller, view);
         this.environment = env;
         this.position = pos;
     }
 
-    public static ControlledRobot create(Environment env, Position pos) {
+    public static ControlledRobot create(Environment env, Position pos, HelloController controller, ImageView view) {
         if (env == null || pos == null) {
             return null;
         }
@@ -27,7 +31,7 @@ public class ControlledRobot implements Robot {
         if (env.robotAt(pos)) {
             return null;
         }
-        ControlledRobot thisBot = new ControlledRobot(env, pos);
+        ControlledRobot thisBot = new ControlledRobot(env, pos, controller, view);
         env.addRobot(thisBot);
         return thisBot;
     }
@@ -35,7 +39,7 @@ public class ControlledRobot implements Robot {
     @Override
     public void turn() {
         angle = (angle + 1) % 8;
-        //super.notifyObservers();
+        super.notifyController(position, "turn");
     }
 
     @Override
@@ -46,7 +50,7 @@ public class ControlledRobot implements Robot {
     @Override
     public void turn(int i) {
         angle = (angle+i)%8;
-        //super.notifyObservers();
+        super.notifyController(position,"turn");
     }
 
     /**
@@ -98,7 +102,7 @@ public class ControlledRobot implements Robot {
             Position newpos = new Position(position.getRow() + y, position.getCol() + x);
             this.environment.moveObject(position, newpos);
             this.position = newpos;
-            //super.notifyObservers();
+            super.notifyController(position, "move");
             return true;
         }
         return false;

@@ -1,11 +1,13 @@
 package vut.ija2023;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
@@ -13,10 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import vut.ija2023.common.AbstractRobot;
-import vut.ija2023.common.Environment;
-import vut.ija2023.common.Robot;
-import vut.ija2023.common.NotifyMessage;
+import vut.ija2023.common.*;
 import vut.ija2023.enviroment.Position;
 import vut.ija2023.room.ControlledRobot;
 import vut.ija2023.room.Room;
@@ -26,19 +25,9 @@ import java.util.Random;
 
 public class HelloController {
 
-
-    private List<NotifyMessage> messagesList;
+    private List<NotifyMessage> messagesList = new ArrayList<NotifyMessage>();
 
     private Timeline timeline;
-
-    private void setupTimeline() {
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateSimulation()));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-    }
-
-    private void updateSimulation() {
-        return;
-    }
 
     @FXML
     private ResourceBundle resources;
@@ -74,14 +63,23 @@ public class HelloController {
     @FXML
     private Button moveRight;
 
-
-
     private Robot controlledRobotIndex;
 
     private Environment env = Room.create(8,8);
 
     // Set the static size of the images
     double imageSize = 45.0;
+
+    private void setupTimeline() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateSimulation()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    private void updateSimulation() {
+        ViewPainter.paint(messagesList);
+        //Logger.log(messagesList);
+        messagesList.clear();
+    }
 
     Position findFreeCell () {
         Random random = new Random();
@@ -126,7 +124,7 @@ public class HelloController {
 
         Position pos;
         if ((pos= findFreeCell()) != null) {
-            Robot new_robot = ControlledRobot.create(env, pos);
+            Robot new_robot = ControlledRobot.create(env, pos, this, robotImageView);
             env.addRobot(new_robot);
 
             // Calculate actual position (x, y) within the gameField pane
@@ -182,11 +180,17 @@ public class HelloController {
         assert gameField != null : "fx:id=\"gameField\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert obstacle != null : "fx:id=\"obstacle\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert robot != null : "fx:id=\"robot\" was not injected: check your FXML file 'hello-view.fxml'.";
-
+        Platform.runLater(() -> {
+            ViewPainter.setGameField(gameField, 8);
+            setupTimeline();
+            timeline.play();
+        });
     }
     @FXML
     public void onMoveUp(ActionEvent actionEvent) {
-        controlledRobotIndex.move();
+        if(controlledRobotIndex!=null){
+            controlledRobotIndex.move();
+        }
     }
     @FXML
     public void onMoveRight(ActionEvent actionEvent) {
