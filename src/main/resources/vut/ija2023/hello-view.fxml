@@ -1,16 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="vut.ija2023.HelloController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vut.ija2023.HelloController">
+   <children>
+      <Pane fx:id="gameField" layoutX="79.0" layoutY="26.0" prefHeight="360.0" prefWidth="360.0">
+         <children>
+            <ImageView fitHeight="360.0" fitWidth="360.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/gameField.png" />
+               </image>
+            </ImageView>
+            <Pane fx:id="robot" layoutX="-4.0" layoutY="-6.0" prefHeight="45.0" prefWidth="45.0">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/valli.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="obstacle" layoutX="319.0" layoutY="-4.0" prefHeight="45.0" prefWidth="45.0">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/bush.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <Button fx:id="addRobotBtn" layoutX="95.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddRobot" text="Add Robot" />
+      <Button fx:id="addObstacleBtn" layoutX="95.0" layoutY="502.0" mnemonicParsing="false" onAction="#onAddObstacle" text="Add Obstacle" />
+      <Button layoutX="95.0" layoutY="545.0" mnemonicParsing="false" text="Add Configuration" />
+      <Button layoutX="95.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/play.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="351.0" layoutY="494.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/down.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="151.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0">
+         <graphic>
+            <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/replay.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="394.0" layoutY="461.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="33.0">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/right.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="351.0" layoutY="430.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/up.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="308.0" layoutY="461.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/left.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
