@@ -72,7 +72,7 @@ public class ControlledRobot extends AbstractRobot implements Robot {
             case 6: x = -1; break;
 
         }
-        Position newpos = new Position(position.getRow() + y,position.getCol() + x);
+        Position newpos = new Position(position.getRow() + x,position.getCol() + y);
         if (environment.containsPosition(newpos)){
             return !(environment.obstacleAt(newpos)) && !(environment.robotAt(newpos));
         }
@@ -99,7 +99,7 @@ public class ControlledRobot extends AbstractRobot implements Robot {
                 case 5: x = -1; y = 1; break;
                 case 6: x = -1; break;
             }
-            Position newpos = new Position(position.getRow() + y, position.getCol() + x);
+            Position newpos = new Position(position.getRow() + x, position.getCol() + y);
             this.environment.moveObject(position, newpos);
             this.position = newpos;
             super.notifyController(position, "move");
