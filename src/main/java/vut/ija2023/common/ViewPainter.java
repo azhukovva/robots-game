@@ -27,11 +27,11 @@ public class ViewPainter {
         }
         for (NotifyMessage msg : messages) {
             switch (msg.getMessage()) {
-                case "move":
-                case "turn":
+                case MOVE:
+                case TURN:
                     updateRobotPosition(msg.getRobot(), msg.getPos());
                     break;
-                case "new":
+                case ADD:
                     addNewRobot(msg.getRobot(), msg.getPos());
                     break;
                 // Add more cases as needed for other types of messages

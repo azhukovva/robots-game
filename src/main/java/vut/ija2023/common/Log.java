@@ -5,7 +5,8 @@ public class Log {
     public enum MovementType {
         WAIT,
         MOVE,
-        TURN
+        TURN,
+        ADD,
     }
     private int stepCount;
     private Position startingPosition;
