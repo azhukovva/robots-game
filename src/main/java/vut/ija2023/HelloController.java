@@ -2,6 +2,9 @@ package vut.ija2023;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
@@ -9,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.Node;
+import javafx.util.Duration;
 import vut.ija2023.common.Environment;
 import vut.ija2023.common.Robot;
 import vut.ija2023.enviroment.Position;
@@ -19,6 +23,17 @@ import java.io.InputStream;
 import java.util.Random;
 
 public class HelloController {
+
+    private Timeline timeline;
+
+    private void setupTimeline() {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateSimulation()));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+    }
+
+    private void updateSimulation() {
+        return;
+    }
 
     @FXML
     private ResourceBundle resources;
