@@ -1,4 +1,4 @@
-package vut.ija2023.Enviroment;
+package vut.ija2023.enviroment;
 
 public class Position {
     private final int x;
