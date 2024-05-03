@@ -13,10 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import vut.ija2023.common.AbstractRobot;
-import vut.ija2023.common.Environment;
-import vut.ija2023.common.Robot;
-import vut.ija2023.common.NotifyMessage;
+import vut.ija2023.common.*;
 import vut.ija2023.enviroment.Position;
 import vut.ija2023.room.ControlledRobot;
 import vut.ija2023.room.Room;
@@ -52,6 +49,12 @@ public class HelloController {
 
     @FXML
     private Button addRobotBtn;
+
+    @FXML
+    private Button addConfigurationBtn;
+
+    @FXML
+    private Button replayBtn;
 
     @FXML
     private Pane gameField;
@@ -126,8 +129,11 @@ public class HelloController {
 
         Position pos;
         if ((pos= findFreeCell()) != null) {
-            Robot new_robot = ControlledRobot.create(env, pos);
+            Robot new_robot = ControlledRobot.create(env, pos, this);
             env.addRobot(new_robot);
+
+            // Create a Logger instance and add it as an observer to the robot
+            Logger logger = new Logger();
 
             // Calculate actual position (x, y) within the gameField pane
             double x = pos.getRow() * cellWidth + (cellWidth - imageSize) / 2;
@@ -198,5 +204,15 @@ public class HelloController {
 
     public void addMessage(Position pos, AbstractRobot abstractRobot, String type) {
         messagesList.add(new NotifyMessage(pos, abstractRobot, type));
+    }
+
+    @FXML
+    void onAddConfiguration(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onReplaySimulation(ActionEvent event) {
+
     }
 }

@@ -1,20 +1,23 @@
 package vut.ija2023.room;
 
+import vut.ija2023.HelloController;
+import vut.ija2023.common.AbstractRobot;
 import vut.ija2023.common.Environment;
 import vut.ija2023.common.Robot;
 import vut.ija2023.enviroment.Position;
 
-public class ControlledRobot implements Robot {
+public class ControlledRobot extends AbstractRobot implements Robot {
     private Position position;
     private Environment environment;
     private int angle = 0;
 
-    private ControlledRobot(Environment env, Position pos) {
+    private ControlledRobot(Environment env, Position pos, HelloController controller) {
+        super(controller);
         this.environment = env;
         this.position = pos;
     }
 
-    public static ControlledRobot create(Environment env, Position pos) {
+    public static ControlledRobot create(Environment env, Position pos, HelloController controller) {
         if (env == null || pos == null) {
             return null;
         }
@@ -27,7 +30,7 @@ public class ControlledRobot implements Robot {
         if (env.robotAt(pos)) {
             return null;
         }
-        ControlledRobot thisBot = new ControlledRobot(env, pos);
+        ControlledRobot thisBot = new ControlledRobot(env, pos, controller);
         env.addRobot(thisBot);
         return thisBot;
     }
