@@ -80,7 +80,7 @@ public class Room implements Environment {
     public boolean robotAt(Position p) {
         if(!containsPosition(p))
             return false;
-        return area[p.getRow()][p.getCol()] instanceof ControlledRobot || area[p.getRow()][p.getCol()] instanceof Robot ;
+        return area[p.getRow()][p.getCol()] instanceof Robot ;
     }
     @Override
     public boolean containsPosition(Position pos) {

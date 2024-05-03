@@ -48,7 +48,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="351.0" layoutY="494.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
+      <Button  fx:id="moveDown" layoutX="351.0" layoutY="494.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -66,16 +66,22 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="394.0" layoutY="461.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="33.0">
+      <Button onAction="#onMoveRight"
+              fx:id="moveRight"
+              layoutX="394.0"
+              layoutY="461.0"
+              mnemonicParsing="false"
+              prefHeight="33.0"
+              prefWidth="33.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/right.png" />
+                  <Image url="@images/right.png"/>
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="351.0" layoutY="430.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
+      <Button onAction="#onMoveUp" fx:id="moveUp" layoutX="351.0" layoutY="430.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -84,7 +90,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="308.0" layoutY="461.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
+      <Button onAction="#onMoveLeft" fx:id="moveLeft" layoutX="308.0" layoutY="461.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
