@@ -81,7 +81,7 @@ public class HelloController {
     double imageSize = 45.0;
 
     private void setupTimeline() {
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateSimulation()));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(.2), e -> updateSimulation()));
         timeline.setCycleCount(Timeline.INDEFINITE);
     }
 
