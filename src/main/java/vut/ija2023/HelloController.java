@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import vut.ija2023.common.*;
 import vut.ija2023.enviroment.Position;
+import vut.ija2023.room.AutonomusRobot;
 import vut.ija2023.room.ControlledRobot;
 import vut.ija2023.room.Room;
 
@@ -26,6 +27,7 @@ import java.util.Random;
 public class HelloController {
 
     private List<NotifyMessage> messagesList = new ArrayList<NotifyMessage>();
+    private List<AutonomusRobot> autoRobotList = new ArrayList<AutonomusRobot>();
 
     private Timeline timeline;
 
@@ -76,6 +78,9 @@ public class HelloController {
     }
 
     private void updateSimulation() {
+        for (AutonomusRobot robot : autoRobotList) {
+            robot.move();
+        }
         ViewPainter.paint(messagesList);
         //Logger.log(messagesList);
         messagesList.clear();
@@ -103,13 +108,9 @@ public class HelloController {
 
     @FXML
     void onAddRobot(ActionEvent event) {
-
-
         // Calculate the width and height of each cell in the grid
         double cellWidth = gameField.getWidth() / 8;
         double cellHeight = gameField.getHeight() / 8;
-
-
 
         InputStream stream = getClass().getResourceAsStream("/vut/ija2023/images/valli.png");
         if (stream == null) {
@@ -170,6 +171,41 @@ public class HelloController {
             bushImageView.setLayoutY(y);
 
             gameField.getChildren().add(bushImageView);
+        }
+    }
+
+    @FXML
+    void onAddAutoRobot(ActionEvent event) {
+        // Calculate the width and height of each cell in the grid
+        double cellWidth = gameField.getWidth() / 8;
+        double cellHeight = gameField.getHeight() / 8;
+
+        InputStream stream = getClass().getResourceAsStream("/vut/ija2023/images/valli.png");
+        if (stream == null) {
+            System.err.println("Could not load robot image");
+            return;
+        }
+
+        Image robotImage = new Image(stream);
+        ImageView robotImageView = new ImageView(robotImage);
+        robotImageView.setFitWidth(imageSize);
+        robotImageView.setFitHeight(imageSize);
+
+        Position pos;
+        if ((pos= findFreeCell()) != null) {
+            AutonomusRobot new_robot = AutonomusRobot.create(env, pos, this, robotImageView);
+            env.addRobot(new_robot);
+
+            // Calculate actual position (x, y) within the gameField pane
+            double x = pos.getRow() * cellWidth + (cellWidth - imageSize) / 2;
+            double y = pos.getCol() * cellHeight + (cellHeight - imageSize) / 2;
+
+            robotImageView.setLayoutX(x);
+            robotImageView.setLayoutY(y);
+
+            gameField.getChildren().add(robotImageView);
+
+            autoRobotList.add(new_robot);
         }
     }
 
