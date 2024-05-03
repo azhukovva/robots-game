@@ -29,6 +29,10 @@ public class HelloController {
 
     private Timeline timeline;
 
+    // Create a Logger instance and add it as an observer to the robot
+    Logger logger = new Logger();
+
+
     @FXML
     private ResourceBundle resources;
 
@@ -41,6 +45,12 @@ public class HelloController {
 
     @FXML
     private Button addRobotBtn;
+
+    @FXML
+    private Button addConfigurationBtn;
+
+    @FXML
+    private Button replayBtn;
 
     @FXML
     private Pane gameField;
@@ -127,6 +137,8 @@ public class HelloController {
             Robot new_robot = ControlledRobot.create(env, pos, this, robotImageView);
             env.addRobot(new_robot);
 
+
+
             // Calculate actual position (x, y) within the gameField pane
             double x = pos.getRow() * cellWidth + (cellWidth - imageSize) / 2;
             double y = pos.getCol() * cellHeight + (cellHeight - imageSize) / 2;
@@ -200,7 +212,17 @@ public class HelloController {
     public void onMoveLeft(ActionEvent actionEvent) {
     }
 
-    public void addMessage(Position pos, AbstractRobot abstractRobot, String type) {
+    public void addMessage(Position pos, AbstractRobot abstractRobot, Log.MovementType type) {
         messagesList.add(new NotifyMessage(pos, abstractRobot, type));
+    }
+
+    @FXML
+    void onAddConfiguration(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onReplaySimulation(ActionEvent event) {
+
     }
 }

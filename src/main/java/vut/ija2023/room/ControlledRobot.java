@@ -4,6 +4,7 @@ import javafx.scene.image.ImageView;
 import vut.ija2023.HelloController;
 import vut.ija2023.common.AbstractRobot;
 import vut.ija2023.common.Environment;
+import vut.ija2023.common.Log;
 import vut.ija2023.common.Robot;
 import vut.ija2023.enviroment.Position;
 
@@ -39,7 +40,7 @@ public class ControlledRobot extends AbstractRobot implements Robot {
     @Override
     public void turn() {
         angle = (angle + 1) % 8;
-        super.notifyController(position, "turn");
+        super.notifyController(position, Log.MovementType.TURN);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class ControlledRobot extends AbstractRobot implements Robot {
     @Override
     public void turn(int i) {
         angle = (angle+i)%8;
-        super.notifyController(position,"turn");
+        super.notifyController(position,Log.MovementType.TURN);
     }
 
     /**
@@ -102,7 +103,7 @@ public class ControlledRobot extends AbstractRobot implements Robot {
             Position newpos = new Position(position.getRow() + y, position.getCol() + x);
             this.environment.moveObject(position, newpos);
             this.position = newpos;
-            super.notifyController(position, "move");
+            super.notifyController(position, Log.MovementType.MOVE);
             return true;
         }
         return false;

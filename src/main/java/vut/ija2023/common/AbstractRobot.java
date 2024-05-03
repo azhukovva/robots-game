@@ -4,6 +4,9 @@ import javafx.scene.image.ImageView;
 import vut.ija2023.HelloController;
 import vut.ija2023.enviroment.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class AbstractRobot implements Robot {
     private HelloController controller;
     private boolean messageFlag = false;
@@ -21,7 +24,7 @@ public abstract class AbstractRobot implements Robot {
         messageFlag = !(messageFlag);
     }
 
-    public void notifyController(Position pos, String type ) {
+    public void notifyController(Position pos, Log.MovementType type ) {
         if (!messageFlag){
         controller.addMessage(pos, this,  type);
         messageFlag = true;
