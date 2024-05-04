@@ -15,4 +15,5 @@ public interface Environment  {
     int rows();
     int cols();
     List<Robot> robots();
+    void clear();
 }

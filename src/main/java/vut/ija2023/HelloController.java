@@ -1,9 +1,7 @@
 package vut.ija2023;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import vut.ija2023.common.*;
 import vut.ija2023.enviroment.Position;
+import vut.ija2023.room.AutonomusRobot;
 import vut.ija2023.room.ControlledRobot;
 import vut.ija2023.room.Room;
 
@@ -26,8 +25,15 @@ import java.util.Random;
 public class HelloController {
 
     private List<NotifyMessage> messagesList = new ArrayList<NotifyMessage>();
+    private List<AutonomusRobot> autoRobotList = new ArrayList<AutonomusRobot>();
+    private List<ControlledRobot> controlledRobotList = new ArrayList<ControlledRobot>();
 
     private Timeline timeline;
+    private boolean isPlaying = false;
+
+
+    private final ImageView playIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png"))));
+    private ImageView stopIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/stop.png"))));
 
     // Create a Logger instance and add it as an observer to the robot
     Logger logger = new Logger();
@@ -39,7 +45,6 @@ public class HelloController {
     @FXML
     private URL location;
 
-
     @FXML
     private Button addObstacleBtn;
 
@@ -47,10 +52,7 @@ public class HelloController {
     private Button addRobotBtn;
 
     @FXML
-    private Button addConfigurationBtn;
-
-    @FXML
-    private Button replayBtn;
+    private Button addAutoRobotBtn;
 
     @FXML
     private Pane gameField;
@@ -62,16 +64,22 @@ public class HelloController {
     private Pane robot;
 
     @FXML
-    private Button moveDown;
-
-    @FXML
     private Button moveUp;
 
     @FXML
-    private Button moveLeft;
+    private Button playBtn;
 
     @FXML
-    private Button moveRight;
+    private Button replayBtn;
+
+    @FXML
+    private Button changeAngle;
+
+    @FXML
+    private Button addConfiguration;
+
+    @FXML
+    private Button newGame;
 
     private Robot controlledRobotIndex;
 
@@ -86,6 +94,10 @@ public class HelloController {
     }
 
     private void updateSimulation() {
+
+        for (AutonomusRobot robot : autoRobotList) {
+            robot.move();
+        }
         ViewPainter.paint(messagesList);
         logger.log(messagesList);
         messagesList.clear();
@@ -113,13 +125,9 @@ public class HelloController {
 
     @FXML
     void onAddRobot(ActionEvent event) {
-
-
         // Calculate the width and height of each cell in the grid
         double cellWidth = gameField.getWidth() / 8;
         double cellHeight = gameField.getHeight() / 8;
-
-
 
         InputStream stream = getClass().getResourceAsStream("/vut/ija2023/images/valli.png");
         if (stream == null) {
@@ -129,15 +137,14 @@ public class HelloController {
 
         Image robotImage = new Image(stream);
         ImageView robotImageView = new ImageView(robotImage);
+        robotImageView.getProperties().put("type", "robot");
         robotImageView.setFitWidth(imageSize);
         robotImageView.setFitHeight(imageSize);
 
         Position pos;
         if ((pos= findFreeCell()) != null) {
-            Robot new_robot = ControlledRobot.create(env, pos, this, robotImageView);
+            ControlledRobot new_robot = ControlledRobot.create(env, pos, this, robotImageView);
             env.addRobot(new_robot);
-
-
 
             // Calculate actual position (x, y) within the gameField pane
             double x = pos.getRow() * cellWidth + (cellWidth - imageSize) / 2;
@@ -149,6 +156,15 @@ public class HelloController {
             gameField.getChildren().add(robotImageView);
 
             controlledRobotIndex = new_robot;
+            controlledRobotList.add(new_robot);
+
+            robotImageView.setOnMouseClicked(mouseEvent -> {
+                for (ControlledRobot otherRobot : controlledRobotList) {
+                    otherRobot.setSelected(false);
+                }
+                new_robot.setSelected(true);
+                controlledRobotIndex = new_robot; // update the selected robot
+            });
         }
     }
 
@@ -186,30 +202,82 @@ public class HelloController {
     }
 
     @FXML
+    void onAddAutoRobot(ActionEvent event) {
+        // Calculate the width and height of each cell in the grid
+        double cellWidth = gameField.getWidth() / 8;
+        double cellHeight = gameField.getHeight() / 8;
+
+        InputStream stream = getClass().getResourceAsStream("/vut/ija2023/images/valli.png");
+        if (stream == null) {
+            System.err.println("Could not load robot image");
+            return;
+        }
+
+        Image robotImage = new Image(stream);
+        ImageView robotImageView = new ImageView(robotImage);
+        robotImageView.getProperties().put("type", "robot");
+        robotImageView.setFitWidth(imageSize);
+        robotImageView.setFitHeight(imageSize);
+
+        Position pos;
+        if ((pos= findFreeCell()) != null) {
+            AutonomusRobot new_robot = AutonomusRobot.create(env, pos, this, robotImageView);
+            env.addRobot(new_robot);
+
+            // Calculate actual position (x, y) within the gameField pane
+            double x = pos.getRow() * cellWidth + (cellWidth - imageSize) / 2;
+            double y = pos.getCol() * cellHeight + (cellHeight - imageSize) / 2;
+
+            robotImageView.setLayoutX(x);
+            robotImageView.setLayoutY(y);
+
+            gameField.getChildren().add(robotImageView);
+
+            autoRobotList.add(new_robot);
+        }
+    }
+
+    @FXML
     void initialize() {
         assert addObstacleBtn != null : "fx:id=\"addObstacleBtn\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert addRobotBtn != null : "fx:id=\"addRobotBtn\" was not injected: check your FXML file 'hello-view.fxml'.";
+        assert addAutoRobotBtn != null : "fx:id=\"addAutoRobotBtn\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert gameField != null : "fx:id=\"gameField\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert obstacle != null : "fx:id=\"obstacle\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert robot != null : "fx:id=\"robot\" was not injected: check your FXML file 'hello-view.fxml'.";
+
+        playIconView.setFitHeight(20.0);
+        playIconView.setFitWidth(33.0);
+        playIconView.setPickOnBounds(true);
+        playIconView.setPreserveRatio(true);
+
+        stopIconView.setFitHeight(20.0);
+        stopIconView.setFitWidth(33.0);
+        stopIconView.setPickOnBounds(true);
+        stopIconView.setPreserveRatio(true);
+
         Platform.runLater(() -> {
             ViewPainter.setGameField(gameField, 8);
             setupTimeline();
-            timeline.play();
         });
     }
     @FXML
     public void onMoveUp(ActionEvent actionEvent) {
-        if(controlledRobotIndex!=null){
-            controlledRobotIndex.move();
+        for (ControlledRobot robot : controlledRobotList) {
+            if (robot.isSelected()) {
+                if(controlledRobotIndex!=null){
+                    controlledRobotIndex.move();
+                }
+            }
         }
     }
     @FXML
-    public void onMoveRight(ActionEvent actionEvent) {
-        controlledRobotIndex.turn();
-    }
-    @FXML
-    public void onMoveLeft(ActionEvent actionEvent) {
+    public void onChangeAngle(ActionEvent actionEvent) {
+        for (ControlledRobot robot : controlledRobotList) {
+            if (robot.isSelected()) {
+                controlledRobotIndex.turn();
+            }
+        }
     }
 
     public void addMessage(Position pos, AbstractRobot abstractRobot, Log.MovementType type) {
@@ -217,12 +285,41 @@ public class HelloController {
     }
 
     @FXML
-    void onAddConfiguration(ActionEvent event) {
+    public void onPlay(ActionEvent actionEvent) {
+        togglePlayButton();
+    }
+    @FXML
+    public void onReplay(ActionEvent actionEvent) {
 
+    }
+    private void togglePlayButton() {
+
+        if (isPlaying) {
+            playBtn.setGraphic(playIconView);
+            isPlaying = false;
+            timeline.stop();
+        } else {
+            playBtn.setGraphic(stopIconView);
+            isPlaying = true;
+            timeline.play();
+        }
     }
 
     @FXML
-    void onReplaySimulation(ActionEvent event) {
+    public void onNewGame(ActionEvent actionEvent) {
+        // Clear the list of autonomous robots
+        autoRobotList.clear();
+        messagesList.clear();
+        // Remove all robot and obstacle images from the gameField pane
+        gameField.getChildren().removeIf(node -> node instanceof ImageView &&
+                ("robot".equals(((ImageView) node).getProperties().get("type")) ||
+                        "obstacle".equals(((ImageView) node).getProperties().get("type"))));
 
+        // Reset the isPlaying state and the play button icon
+        timeline.stop();
+        isPlaying = false;
+        playBtn.setGraphic(playIconView);
     }
+
+
 }

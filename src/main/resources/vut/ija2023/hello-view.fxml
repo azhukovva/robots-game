@@ -5,8 +5,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import java.net.URL?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vut.ija2023.HelloController">
+   <stylesheets>
+      <URL value="@styles.css" />
+   </stylesheets>
    <children>
       <Pane fx:id="gameField" layoutX="79.0" layoutY="26.0" prefHeight="360.0" prefWidth="360.0">
          <children>
@@ -15,30 +19,16 @@
                   <Image url="@images/gameField.png" />
                </image>
             </ImageView>
-            <Pane fx:id="robot" layoutX="-4.0" layoutY="-6.0" prefHeight="45.0" prefWidth="45.0">
-               <children>
-                  <ImageView fitHeight="45.0" fitWidth="45.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/valli.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
-            <Pane fx:id="obstacle" layoutX="319.0" layoutY="-4.0" prefHeight="45.0" prefWidth="45.0">
-               <children>
-                  <ImageView fitHeight="45.0" fitWidth="45.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@images/bush.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </Pane>
          </children>
       </Pane>
-      <Button fx:id="addRobotBtn" layoutX="95.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddRobot" text="Add Robot" />
-      <Button fx:id="addObstacleBtn" layoutX="95.0" layoutY="502.0" mnemonicParsing="false" onAction="#onAddObstacle" text="Add Obstacle" />
-      <Button fx:id="addConfigurationBtn" layoutX="95.0" layoutY="545.0" mnemonicParsing="false" onAction="#onAddConfiguration" text="Add Configuration" />
-      <Button layoutX="95.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0">
+      <Button fx:id="addRobotBtn" layoutX="95.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddRobot" text="Add Controlled Robot" styleClass="add-robot"/>
+      <Button fx:id="addAutoRobotBtn" layoutX="279.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddAutoRobot" text="Add Autonomus Robot" styleClass="add-robot"/>
+      <Button fx:id="addObstacleBtn" layoutX="95.0" layoutY="502.0" mnemonicParsing="false" onAction="#onAddObstacle" text="Add Obstacle" styleClass="add-obstacle"/>
+
+      <Button fx:id="addConfiguration" layoutX="95.0" layoutY="545.0" mnemonicParsing="false" text="Add Configuration" />
+      <Button fx:id="newGame" layoutX="340.0" layoutY="545.0" mnemonicParsing="false" text="New Game" onAction="#onNewGame"/>
+
+      <Button fx:id="playBtn" layoutX="95.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onPlay">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -47,16 +37,8 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="moveDown" layoutX="351.0" layoutY="494.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
-         <graphic>
-            <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/down.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="replayBtn" layoutX="151.0" layoutY="403.0" mnemonicParsing="false" onAction="#onReplaySimulation" prefHeight="34.0" prefWidth="37.0">
+
+      <Button fx:id="replayBtn" layoutX="151.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onReplay">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -65,16 +47,24 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="moveRight" layoutX="394.0" layoutY="461.0" mnemonicParsing="false" onAction="#onMoveRight" prefHeight="33.0" prefWidth="33.0">
+
+      <Button onAction="#onChangeAngle"
+              fx:id="changeAngle"
+              layoutX="379.0"
+              layoutY="404.0"
+              mnemonicParsing="false"
+              prefHeight="33.0"
+              prefWidth="33.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/right.png" />
+                  <Image url="@images/angle.png"/>
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="moveUp" layoutX="351.0" layoutY="430.0" mnemonicParsing="false" onAction="#onMoveUp" prefHeight="24.0" prefWidth="22.0">
+
+      <Button onAction="#onMoveUp" fx:id="moveUp" layoutX="326.0" layoutY="404.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -83,14 +73,6 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="moveLeft" layoutX="308.0" layoutY="461.0" mnemonicParsing="false" onAction="#onMoveLeft" prefHeight="24.0" prefWidth="22.0">
-         <graphic>
-            <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/left.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
+
    </children>
 </AnchorPane>

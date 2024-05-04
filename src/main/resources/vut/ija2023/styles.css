@@ -1,0 +1,27 @@
+/* styles.css */
+
+.add-robot {
+    -fx-background-color: #c26b1c;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 30px;
+    -fx-background-radius: 5px;
+}
+
+.add-robot:hover {
+    -fx-background-color: #924e10;
+}
+
+.add-obstacle {
+    -fx-background-color: #645c06;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 30px;
+    -fx-background-radius: 5px;
+}
+
+.add-obstacle:hover {
+    -fx-background-color: #464002;
+}
