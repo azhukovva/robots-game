@@ -18,7 +18,6 @@ public class ViewPainter {
         gameField = pane;
         cellWidth = gameField.getWidth() / gridSize;
         cellHeight = gameField.getHeight() / gridSize;
-       // System.out.println("Cell Width: " + cellWidth + ", Cell Height: " + cellHeight + " " + gridSize);
     }
 
     public static void paint(List<NotifyMessage> messages) {
@@ -29,12 +28,8 @@ public class ViewPainter {
             switch (msg.getMessage()) {
                 case MOVE:
                 case TURN:
-                    updateRobotPosition(msg.getRobot(), msg.getPos());
+                    updateRobotPosition(msg.getRobot(), msg.getRobot().getPosition());
                     break;
-                case ADD:
-                    addNewRobot(msg.getRobot(), msg.getPos());
-                    break;
-                // Add more cases as needed for other types of messages
             }
         }
     }
@@ -45,9 +40,6 @@ public class ViewPainter {
         if (view != null) {
             double x = pos.getRow() * cellWidth + (cellWidth - view.getFitWidth()) / 2;
             double y = pos.getCol() * cellHeight + (cellHeight - view.getFitHeight()) / 2;
-//            System.out.println("Cell Width: " + cellWidth + ", Cell Height: " + cellHeight);
-//            System.out.println("ImageView Width: " + view.getFitWidth() + ", ImageView Height: " + view.getFitHeight());
-//            System.out.println("Calculated X: " + x + ", Calculated Y: " + y);
             view.setLayoutX(x);
             view.setLayoutY(y);
             robot.toggleFlag();

@@ -24,9 +24,9 @@ public abstract class AbstractRobot implements Robot {
         messageFlag = !(messageFlag);
     }
 
-    public void notifyController(Position pos, Log.MovementType type ) {
+    public void notifyController(Position pos, Log.MovementType type, int angle ) {
         if (!messageFlag){
-        controller.addMessage(pos, this,  type);
+        controller.addMessage(pos, this,  type, angle );
         messageFlag = true;
         }
     }

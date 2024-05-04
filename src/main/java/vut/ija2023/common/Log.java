@@ -6,16 +6,19 @@ public class Log {
         WAIT,
         MOVE,
         TURN,
+        TURN_RIGHT,
         ADD,
     }
     private int stepCount;
     private Position startingPosition;
     private MovementType movementType;
+    private int angle;
 
-    public Log(int stepCount, Position startingPosition, MovementType movementType) {
+    public Log(int stepCount, Position startingPosition, MovementType movementType, int angle) {
         this.stepCount = stepCount;
         this.startingPosition = startingPosition;
         this.movementType = movementType;
+        this.angle = angle;
     }
 
     public int getStepCount() {
@@ -40,6 +43,10 @@ public class Log {
 
     public void setMovementType(MovementType movementType) {
         this.movementType = movementType;
+    }
+
+    public int getAngle() {
+        return angle;
     }
 
 }

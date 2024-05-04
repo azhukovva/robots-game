@@ -53,9 +53,9 @@ public class AutonomusRobot extends AbstractRobot implements Robot {
                 case 6: x = -1; break;
             }
             Position newpos = new Position(position.getRow() + x, position.getCol() + y);
+            super.notifyController(position, MovementType.MOVE, angle);
             this.environment.moveObject(position, newpos);
             this.position = newpos;
-            super.notifyController(position, MovementType.MOVE);
             return true;
         }
         else {
@@ -77,12 +77,12 @@ public class AutonomusRobot extends AbstractRobot implements Robot {
     @Override
     public void turn(int i) {
         angle = (angle+i)%8;
-        super.notifyController(position, MovementType.TURN);
+        super.notifyController(position, MovementType.TURN, angle);
     }
 
     public void turn() {
+        super.notifyController(position, MovementType.TURN, angle);
         angle = (angle + 1) % 8;
-        super.notifyController(position, MovementType.TURN);
     }
 
     @Override

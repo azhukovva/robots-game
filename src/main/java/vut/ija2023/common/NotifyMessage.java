@@ -7,10 +7,12 @@ public class NotifyMessage {
     private Position pos;
     private Robot robot;
     private MovementType message;
-    public NotifyMessage(Position pos, Robot robot, MovementType message) {
+    private int angle;
+    public NotifyMessage(Position pos, Robot robot, MovementType message, int angle) {
         this.pos = pos;
         this.robot = robot;
         this.message = message;
+        this.angle = angle;
     }
     public Position getPos() {
         return pos;
@@ -20,5 +22,9 @@ public class NotifyMessage {
     }
     public Robot getRobot() {
         return robot;
+    }
+
+    public int getAngle(){
+        return angle;
     }
 }

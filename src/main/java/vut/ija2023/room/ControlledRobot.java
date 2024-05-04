@@ -46,8 +46,8 @@ public class ControlledRobot extends AbstractRobot implements Robot {
 
     @Override
     public void turn() {
+        super.notifyController(position, Log.MovementType.TURN, angle);
         angle = (angle + 1) % 8;
-        super.notifyController(position, Log.MovementType.TURN);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ControlledRobot extends AbstractRobot implements Robot {
     @Override
     public void turn(int i) {
         angle = (angle+i)%8;
-        super.notifyController(position,Log.MovementType.TURN);
+        super.notifyController(position,Log.MovementType.TURN, angle);
     }
 
     /**
@@ -108,9 +108,9 @@ public class ControlledRobot extends AbstractRobot implements Robot {
                 case 6: x = -1; break;
             }
             Position newpos = new Position(position.getRow() + x, position.getCol() + y);
+            super.notifyController(position, Log.MovementType.MOVE, angle);
             this.environment.moveObject(position, newpos);
             this.position = newpos;
-            super.notifyController(position, Log.MovementType.MOVE);
             return true;
         }
         return false;

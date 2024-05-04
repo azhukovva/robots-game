@@ -34,9 +34,9 @@ public class HelloController {
 
 
     private final ImageView playIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png"))));
-    private ImageView stopIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/stop.png"))));
-
-    private Image robotImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/valli.png")));                                                // Create a Logger instance and add it as an observer to the robot
+    private final ImageView stopIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/stop.png"))));;
+    Image bushImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/bush.png")));
+    private final Image robotImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/valli.png")));                                                // Create a Logger instance and add it as an observer to the robot
     public Logger logger = new Logger();
 
 
@@ -57,6 +57,9 @@ public class HelloController {
 
     @FXML
     private Pane gameField;
+
+    double cellWidth;
+    double cellHeight;
 
     @FXML
     private Pane obstacle;
@@ -123,17 +126,19 @@ public class HelloController {
         return pos;
     }
 
-    @FXML
-    void onAddRobot(ActionEvent event) {
-        // Calculate the width and height of each cell in the grid
-        double cellWidth = gameField.getWidth() / 8;
-        double cellHeight = gameField.getHeight() / 8;
-
-
+    ImageView createRobotImageView() {
         ImageView robotImageView = new ImageView(robotImage);
         robotImageView.getProperties().put("type", "robot");
         robotImageView.setFitWidth(imageSize);
         robotImageView.setFitHeight(imageSize);
+        return robotImageView;
+    }
+
+    @FXML
+    void onAddRobot(ActionEvent event) {
+        // Calculate the width and height of each cell in the grid
+
+        ImageView robotImageView = createRobotImageView();
 
         Position pos;
         if ((pos= findFreeCell()) != null) {
@@ -159,6 +164,9 @@ public class HelloController {
                 new_robot.setSelected(true);
                 controlledRobotIndex = new_robot; // update the selected robot
             });
+
+            this.addMessage(new_robot.getPosition(), new_robot, Log.MovementType.ADD, new_robot.angle());
+
         }
     }
 
@@ -166,19 +174,8 @@ public class HelloController {
     @FXML
     void onAddObstacle(ActionEvent event) {
 
-        // Calculate the width and height of each cell in the grid
-        double cellWidth = gameField.getWidth() / 8;
-        double cellHeight = gameField.getHeight() / 8;
-
-        InputStream stream = getClass().getResourceAsStream("/vut/ija2023/images/bush.png");
-        if (stream == null) {
-            System.err.println("Could not load bush image");
-            return;
-        }
-        Image bushImage = new Image(stream);
-
         ImageView bushImageView = new ImageView(bushImage);
-        bushImageView.getProperties().put("type", "robot");
+        bushImageView.getProperties().put("type", "obstacle");
         bushImageView.setFitWidth(imageSize);
         bushImageView.setFitHeight(imageSize);
 
@@ -198,21 +195,7 @@ public class HelloController {
 
     @FXML
     void onAddAutoRobot(ActionEvent event) {
-        // Calculate the width and height of each cell in the grid
-        double cellWidth = gameField.getWidth() / 8;
-        double cellHeight = gameField.getHeight() / 8;
-
-        InputStream stream = getClass().getResourceAsStream("/vut/ija2023/images/valli.png");
-        if (stream == null) {
-            System.err.println("Could not load robot image");
-            return;
-        }
-
-        Image robotImage = new Image(stream);
-        ImageView robotImageView = new ImageView(robotImage);
-        robotImageView.getProperties().put("type", "robot");
-        robotImageView.setFitWidth(imageSize);
-        robotImageView.setFitHeight(imageSize);
+        ImageView robotImageView = createRobotImageView();
 
         Position pos;
         if ((pos= findFreeCell()) != null) {
@@ -229,6 +212,7 @@ public class HelloController {
             gameField.getChildren().add(robotImageView);
 
             autoRobotList.add(new_robot);
+            this.addMessage(new_robot.getPosition(), new_robot, Log.MovementType.ADD, new_robot.angle());
         }
     }
 
@@ -240,6 +224,7 @@ public class HelloController {
         assert gameField != null : "fx:id=\"gameField\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert obstacle != null : "fx:id=\"obstacle\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert robot != null : "fx:id=\"robot\" was not injected: check your FXML file 'hello-view.fxml'.";
+
 
         playIconView.setFitHeight(20.0);
         playIconView.setFitWidth(33.0);
@@ -253,6 +238,8 @@ public class HelloController {
 
         Platform.runLater(() -> {
             ViewPainter.setGameField(gameField, 8);
+            cellWidth = gameField.getWidth() / 8;
+            cellHeight = gameField.getHeight() / 8;
             setupTimeline();
         });
     }
@@ -275,8 +262,8 @@ public class HelloController {
         }
     }
 
-    public void addMessage(Position pos, AbstractRobot abstractRobot, Log.MovementType type) {
-        messagesList.add(new NotifyMessage(pos, abstractRobot, type));
+    public void addMessage(Position pos, AbstractRobot abstractRobot, Log.MovementType type, int angle) {
+        messagesList.add(new NotifyMessage(pos, abstractRobot, type, angle));
     }
 
     @FXML
