@@ -27,6 +27,7 @@ public class HelloController {
     private List<AutonomusRobot> autoRobotList = new ArrayList<AutonomusRobot>();
 
     private Timeline timeline;
+    private boolean isPlaying = false;
 
     @FXML
     private ResourceBundle resources;
@@ -40,6 +41,9 @@ public class HelloController {
 
     @FXML
     private Button addRobotBtn;
+
+    @FXML
+    private Button addAutoRobotBtn;
 
     @FXML
     private Pane gameField;
@@ -62,6 +66,12 @@ public class HelloController {
     @FXML
     private Button changeAngle;
 
+    @FXML
+    private Button addConfiguration;
+
+    @FXML
+    private Button newGame;
+
     private Robot controlledRobotIndex;
 
     private Environment env = Room.create(8,8);
@@ -75,6 +85,10 @@ public class HelloController {
     }
 
     private void updateSimulation() {
+        if (!isPlaying) {
+            return;
+        }
+
         for (AutonomusRobot robot : autoRobotList) {
             robot.move();
         }
@@ -117,6 +131,7 @@ public class HelloController {
 
         Image robotImage = new Image(stream);
         ImageView robotImageView = new ImageView(robotImage);
+        robotImageView.getProperties().put("type", "robot");
         robotImageView.setFitWidth(imageSize);
         robotImageView.setFitHeight(imageSize);
 
@@ -154,6 +169,7 @@ public class HelloController {
         Image bushImage = new Image(stream);
 
         ImageView bushImageView = new ImageView(bushImage);
+        bushImageView.getProperties().put("type", "obstacle");
         bushImageView.setFitWidth(imageSize);
         bushImageView.setFitHeight(imageSize);
 
@@ -185,6 +201,7 @@ public class HelloController {
 
         Image robotImage = new Image(stream);
         ImageView robotImageView = new ImageView(robotImage);
+        robotImageView.getProperties().put("type", "robot");
         robotImageView.setFitWidth(imageSize);
         robotImageView.setFitHeight(imageSize);
 
@@ -210,6 +227,7 @@ public class HelloController {
     void initialize() {
         assert addObstacleBtn != null : "fx:id=\"addObstacleBtn\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert addRobotBtn != null : "fx:id=\"addRobotBtn\" was not injected: check your FXML file 'hello-view.fxml'.";
+        assert addAutoRobotBtn != null : "fx:id=\"addAutoRobotBtn\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert gameField != null : "fx:id=\"gameField\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert obstacle != null : "fx:id=\"obstacle\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert robot != null : "fx:id=\"robot\" was not injected: check your FXML file 'hello-view.fxml'.";
@@ -239,6 +257,13 @@ public class HelloController {
 
     @FXML
     public void onPlay(ActionEvent actionEvent) {
+        togglePlayButton();
+    }
+    @FXML
+    public void onReplay(ActionEvent actionEvent) {
+
+    }
+    private void togglePlayButton() {
         // Load the play and stop icons
         Image playIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png")));
         Image stopIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/stop.png")));
@@ -249,7 +274,7 @@ public class HelloController {
         playIconView.setFitHeight(20.0);
         playIconView.setFitWidth(33.0);
         playIconView.setPickOnBounds(true);
-        playIconView.setPreserveRatio(true); // image will not be distorted or stretched
+        playIconView.setPreserveRatio(true);
 
         stopIconView.setFitHeight(20.0);
         stopIconView.setFitWidth(33.0);
@@ -265,10 +290,25 @@ public class HelloController {
         }
     }
 
-    private boolean isPlaying = false;
     @FXML
-    public void onReplay(ActionEvent actionEvent) {
+    public void onNewGame(ActionEvent actionEvent) {
+        // Clear the list of autonomous robots
+        autoRobotList.clear();
+        messagesList.clear();
+        // Remove all robot and obstacle images from the gameField pane
+        gameField.getChildren().removeIf(node -> node instanceof ImageView &&
+                ("robot".equals(((ImageView) node).getProperties().get("type")) ||
+                        "obstacle".equals(((ImageView) node).getProperties().get("type"))));
 
+        // Reset the isPlaying state and the play button icon
+        isPlaying = false;
+        Image playIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png")));
+        ImageView playIconView = new ImageView(playIcon);
+        playIconView.setFitHeight(20.0);
+        playIconView.setFitWidth(33.0);
+        playIconView.setPickOnBounds(true);
+        playIconView.setPreserveRatio(true);
+        playBtn.setGraphic(playIconView);
     }
 
 

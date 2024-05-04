@@ -75,7 +75,9 @@ public class Room implements Environment {
         return cols;
     }
     @Override
-    public List<Robot> robots() { return new ArrayList<>(robotsList); }
+    public List<Robot> robots() {
+        return new ArrayList<>(robotsList);
+    }
     @Override
     public boolean robotAt(Position p) {
         if(!containsPosition(p))
@@ -85,6 +87,11 @@ public class Room implements Environment {
     @Override
     public boolean containsPosition(Position pos) {
         return pos.getRow() >= 0 && pos.getRow() < rows && pos.getCol() >= 0 && pos.getCol() < cols;
+    }
+
+    @Override
+    public void clear() {
+        this.robotsList.clear();
     }
 
 
