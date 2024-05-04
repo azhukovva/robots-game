@@ -1,8 +1,13 @@
 /* styles.css */
+.anchor-pane {
+    /*-fx-background-image: url('images/bg3.jpg');*/
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
 
 .add-robot {
-    -fx-background-color: #c26b1c;
-    -fx-text-fill: white;
+    -fx-background-color: #d3d3d3;
+    -fx-text-fill: #2d2d2d;
     -fx-font-size: 12px;
     -fx-pref-width: 150px;
     -fx-pref-height: 30px;
@@ -10,18 +15,48 @@
 }
 
 .add-robot:hover {
-    -fx-background-color: #924e10;
+    -fx-background-color: #ff9600;
 }
 
 .add-obstacle {
-    -fx-background-color: #645c06;
-    -fx-text-fill: white;
-    -fx-font-size: 12px;
-    -fx-pref-width: 150px;
-    -fx-pref-height: 30px;
+    -fx-background-color:  #d3d3d3;
+    -fx-text-fill: #2d2d2d;
     -fx-background-radius: 5px;
+    -fx-pref-height: 30px;
 }
 
 .add-obstacle:hover {
-    -fx-background-color: #464002;
+    -fx-background-color: #83ad4d;
+}
+
+.play-btn {
+    -fx-background-color:  #83ad4d;
+    -fx-background-radius: 5px;
+}
+.play-btn-active, .play-btn:hover {
+    -fx-background-color: #638538;
+}
+
+
+.replay-btn, .move-btn {
+    -fx-background-color: #ff9600;
+    -fx-background-radius: 5px;
+}
+.play-btn-active, .replay-btn:hover, .move-btn:hover  {
+    -fx-background-color: #e87302;
+}
+
+
+
+.config-btn {
+    -fx-background-color: #83ad4d;
+    -fx-background-radius: 5px;
+    -fx-pref-height: 30px;
+}
+.config-btn:hover {
+    -fx-background-color: #638538;
+}
+
+.game-field {
+    -fx-border-radius: 30px;
 }

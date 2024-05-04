@@ -6,32 +6,36 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import java.net.URL?>
+<?import javafx.scene.shape.Rectangle?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vut.ija2023.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vut.ija2023.HelloController" styleClass="anchor-pane">
    <stylesheets>
       <URL value="@styles.css" />
    </stylesheets>
    <children>
-      <Pane fx:id="gameField" layoutX="79.0" layoutY="26.0" prefHeight="360.0" prefWidth="360.0">
+      <Pane fx:id="gameField" layoutX="79.0" layoutY="26.0" prefHeight="360.0" prefWidth="360.0" styleClass="game-field">
          <children>
-            <ImageView fitHeight="360.0" fitWidth="360.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="360.0" fitWidth="360.0" pickOnBounds="true" preserveRatio="true" >
                <image>
-                  <Image url="@images/gameField.png" />
+                  <Image url="@images/field.png" />
                </image>
+               <clip>
+                  <Rectangle width="360.0" height="360.0" arcWidth="30.0" arcHeight="30.0" />
+               </clip>
             </ImageView>
          </children>
       </Pane>
       <Button fx:id="addRobotBtn" layoutX="95.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddRobot" text="Add Controlled Robot" styleClass="add-robot"/>
       <Button fx:id="addAutoRobotBtn" layoutX="279.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddAutoRobot" text="Add Autonomus Robot" styleClass="add-robot"/>
-      <Button fx:id="addObstacleBtn" layoutX="95.0" layoutY="502.0" mnemonicParsing="false" onAction="#onAddObstacle" text="Add Obstacle" styleClass="add-obstacle"/>
+      <Button fx:id="addObstacleBtn" layoutX="95.0" layoutY="500.0" mnemonicParsing="false" onAction="#onAddObstacle" text="Add Obstacle" styleClass="add-obstacle"/>
 
-      <Button fx:id="addConfiguration" layoutX="95.0" layoutY="545.0" mnemonicParsing="false" text="Add Configuration" />
-      <Button fx:id="newGame" layoutX="340.0" layoutY="545.0" mnemonicParsing="false" text="New Game" onAction="#onNewGame"/>
+      <Button fx:id="addConfiguration" layoutX="95.0" layoutY="545.0" mnemonicParsing="false" text="Add Configuration" styleClass="config-btn"/>
+      <Button fx:id="newGame" layoutX="340.0" layoutY="545.0" mnemonicParsing="false" text="New Game" onAction="#onNewGame" styleClass="config-btn"/>
 
-      <Button fx:id="playBtn" layoutX="95.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onPlay">
+      <Button fx:id="playBtn" layoutX="95.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onPlay" styleClass="play-btn">
          <graphic>
-            <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" >
                <image>
                   <Image url="@images/play.png" />
                </image>
@@ -39,7 +43,7 @@
          </graphic>
       </Button>
 
-      <Button fx:id="replayBtn" layoutX="151.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onReplay">
+      <Button fx:id="replayBtn" layoutX="148.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onReplay" styleClass="replay-btn">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -55,7 +59,8 @@
               layoutY="404.0"
               mnemonicParsing="false"
               prefHeight="33.0"
-              prefWidth="33.0">
+              prefWidth="33.0"
+              styleClass="move-btn">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -65,7 +70,7 @@
          </graphic>
       </Button>
 
-      <Button onAction="#onMoveUp" fx:id="moveUp" layoutX="326.0" layoutY="404.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0">
+      <Button onAction="#onMoveUp" fx:id="moveUp" layoutX="326.0" layoutY="404.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="22.0" styleClass="move-btn">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -256,9 +256,6 @@ public class HelloController {
                 }
             }
         }
-//        if(controlledRobotIndex!=null){
-//            controlledRobotIndex.move();
-//        }
     }
     @FXML
     public void onChangeAngle(ActionEvent actionEvent) {
@@ -267,7 +264,6 @@ public class HelloController {
                 controlledRobotIndex.turn();
             }
         }
-        //controlledRobotIndex.turn();
     }
 
     public void addMessage(Position pos, AbstractRobot abstractRobot, String type) {
@@ -302,9 +298,11 @@ public class HelloController {
 
         if (isPlaying) {
             playBtn.setGraphic(playIconView);
+            playBtn.getStyleClass().remove("play-btn-active");
             isPlaying = false;
         } else {
             playBtn.setGraphic(stopIconView);
+            playBtn.getStyleClass().add("play-btn-active");
             isPlaying = true;
         }
     }
@@ -329,6 +327,4 @@ public class HelloController {
         playIconView.setPreserveRatio(true);
         playBtn.setGraphic(playIconView);
     }
-
-
 }
