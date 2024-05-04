@@ -290,10 +290,12 @@ public class HelloController {
 
         if (isPlaying) {
             playBtn.setGraphic(playIconView);
+            playBtn.getStyleClass().remove("play-btn-active");
             isPlaying = false;
             timeline.stop();
         } else {
             playBtn.setGraphic(stopIconView);
+            playBtn.getStyleClass().add("play-btn-active");
             isPlaying = true;
             timeline.play();
         }
@@ -314,6 +316,4 @@ public class HelloController {
         isPlaying = false;
         playBtn.setGraphic(playIconView);
     }
-
-
 }
