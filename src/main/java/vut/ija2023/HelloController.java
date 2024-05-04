@@ -19,6 +19,7 @@ import vut.ija2023.room.AutonomusRobot;
 import vut.ija2023.room.ControlledRobot;
 import vut.ija2023.room.Room;
 
+
 import java.io.InputStream;
 import java.util.Random;
 
@@ -35,8 +36,8 @@ public class HelloController {
     private final ImageView playIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png"))));
     private ImageView stopIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/stop.png"))));
 
-    // Create a Logger instance and add it as an observer to the robot
-    Logger logger = new Logger();
+    private Image robotImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/valli.png")));                                                // Create a Logger instance and add it as an observer to the robot
+    public Logger logger = new Logger();
 
 
     @FXML
@@ -94,7 +95,6 @@ public class HelloController {
     }
 
     private void updateSimulation() {
-
         for (AutonomusRobot robot : autoRobotList) {
             robot.move();
         }
@@ -129,13 +129,7 @@ public class HelloController {
         double cellWidth = gameField.getWidth() / 8;
         double cellHeight = gameField.getHeight() / 8;
 
-        InputStream stream = getClass().getResourceAsStream("/vut/ija2023/images/valli.png");
-        if (stream == null) {
-            System.err.println("Could not load robot image");
-            return;
-        }
 
-        Image robotImage = new Image(stream);
         ImageView robotImageView = new ImageView(robotImage);
         robotImageView.getProperties().put("type", "robot");
         robotImageView.setFitWidth(imageSize);
