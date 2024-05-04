@@ -178,6 +178,7 @@ public class HelloController {
         Image bushImage = new Image(stream);
 
         ImageView bushImageView = new ImageView(bushImage);
+        bushImageView.getProperties().put("type", "robot");
         bushImageView.setFitWidth(imageSize);
         bushImageView.setFitHeight(imageSize);
 
