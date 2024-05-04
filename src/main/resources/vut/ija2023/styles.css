@@ -1,12 +1,12 @@
 /* styles.css */
 .anchor-pane {
-    -fx-background-image: url('images/anchor-pane.jpg');
+    -fx-background-image: url('images/carpet.png');
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
 }
 
 .add-robot {
-    -fx-background-color: #d3d3d3;
+    -fx-background-color: #ececec;
     -fx-text-fill: #2d2d2d;
     -fx-font-size: 12px;
     -fx-pref-width: 150px;
@@ -15,48 +15,47 @@
 }
 
 .add-robot:hover {
-    -fx-background-color: #ff9600;
+    -fx-background-color: #2370c9;
+    -fx-text-fill:  #ececec;
 }
 
 .add-obstacle {
-    -fx-background-color:  #d3d3d3;
+    -fx-background-color:  #ececec;
     -fx-text-fill: #2d2d2d;
     -fx-background-radius: 5px;
     -fx-pref-height: 30px;
 }
 
 .add-obstacle:hover {
-    -fx-background-color: #83ad4d;
+    -fx-background-color: #d24545;
+    -fx-text-fill:  #ececec;
 }
 
 .play-btn {
-    -fx-background-color:  #83ad4d;
+    -fx-background-color:  #5aa1f5;
     -fx-background-radius: 5px;
 }
 .play-btn-active, .play-btn:hover {
-    -fx-background-color: #638538;
+    -fx-background-color: #2370c9;
 }
 
 
 .replay-btn, .move-btn {
-    -fx-background-color: #ff9600;
+    -fx-background-color: #5aa1f5;
     -fx-background-radius: 5px;
 }
 .play-btn-active, .replay-btn:hover, .move-btn:hover  {
-    -fx-background-color: #e87302;
+    -fx-background-color: #2370c9;
 }
 
 
 
 .config-btn {
-    -fx-background-color: #83ad4d;
+    -fx-background-color: #7ab2fc;
     -fx-background-radius: 5px;
     -fx-pref-height: 30px;
 }
 .config-btn:hover {
-    -fx-background-color: #638538;
-}
-
-.game-field {
-    -fx-border-radius: 30px;
+    -fx-background-color: #2b73c7;
+    -fx-text-fill:  #ececec;
 }

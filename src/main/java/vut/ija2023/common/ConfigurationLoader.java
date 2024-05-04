@@ -56,6 +56,7 @@ public class ConfigurationLoader {
     public static class Robot {
         private Position position;
         private int angle;
+        private String type;
 
         public Position getPosition() {
             return position;
@@ -73,11 +74,19 @@ public class ConfigurationLoader {
             this.angle = angle;
         }
 
+        public String getType() {
+            return type;
+        }
+        public void setType(String type) {
+            this.type = type;
+        }
+
         @Override
         public String toString() {
             return "Robot{" +
                     "position=" + position +
                     ", angle=" + angle +
+                    ", type=" + type +
                     '}';
         }
     }

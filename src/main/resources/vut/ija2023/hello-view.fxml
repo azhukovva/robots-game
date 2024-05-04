@@ -17,9 +17,9 @@
       <Pane fx:id="gameField" layoutX="79.0" layoutY="26.0" prefHeight="360.0" prefWidth="360.0" styleClass="game-field">
          <children>
             <ImageView fitHeight="360.0" fitWidth="360.0" pickOnBounds="true" preserveRatio="true" >
-               <image>
-                  <Image url="@images/field.png" />
-               </image>
+<!--               <image>-->
+<!--                  <Image url="@images/carpet.png" />-->
+<!--               </image>-->
                <clip>
                   <Rectangle width="360.0" height="360.0" arcWidth="30.0" arcHeight="30.0" />
                </clip>
@@ -43,15 +43,15 @@
          </graphic>
       </Button>
 
-      <Button fx:id="replayBtn" layoutX="148.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onReplay" styleClass="replay-btn">
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/replay.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
+<!--      <Button fx:id="replayBtn" layoutX="148.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onReplay" styleClass="replay-btn">-->
+<!--         <graphic>-->
+<!--            <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">-->
+<!--               <image>-->
+<!--                  <Image url="@images/replay.png" />-->
+<!--               </image>-->
+<!--            </ImageView>-->
+<!--         </graphic>-->
+<!--      </Button>-->
 
       <Button onAction="#onChangeAngle"
               fx:id="changeAngle"

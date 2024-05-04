@@ -39,8 +39,8 @@ public class HelloController {
 
     private final ImageView playIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png"))));
     private final ImageView stopIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/stop.png"))));;
-    Image bushImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/bush.png")));
-    private final Image robotImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/valli.png")));                                                // Create a Logger instance and add it as an observer to the robot
+    Image bushImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/armchair.png")));
+    private final Image robotImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/robot.png")));                                                // Create a Logger instance and add it as an observer to the robot
     public Logger logger = new Logger();
 
 
@@ -148,6 +148,19 @@ public class HelloController {
         return robotImageView;
     }
 
+    void createRobot(Robot new_robot){
+        env.addRobot(new_robot);
+
+        // Calculate actual position (x, y) within the gameField pane
+        double x = new_robot.getPosition().getRow() * cellWidth + (cellWidth - imageSize) / 2;
+        double y = new_robot.getPosition().getCol() * cellHeight + (cellHeight - imageSize) / 2;
+
+        new_robot.getImageView().setLayoutX(x);
+        new_robot.getImageView().setLayoutY(y);
+
+        gameField.getChildren().add(new_robot.getImageView());
+    }
+
     @FXML
     void onAddRobot(ActionEvent event) {
         // Calculate the width and height of each cell in the grid
@@ -157,16 +170,8 @@ public class HelloController {
         Position pos;
         if ((pos = findFreeCell()) != null) {
             ControlledRobot new_robot = ControlledRobot.create(env, pos, this, robotImageView);
-            env.addRobot(new_robot);
 
-            // Calculate actual position (x, y) within the gameField pane
-            double x = pos.getRow() * cellWidth + (cellWidth - imageSize) / 2;
-            double y = pos.getCol() * cellHeight + (cellHeight - imageSize) / 2;
-
-            robotImageView.setLayoutX(x);
-            robotImageView.setLayoutY(y);
-
-            gameField.getChildren().add(robotImageView);
+            createRobot(new_robot);
 
             controlledRobotIndex = new_robot;
             controlledRobotList.add(new_robot);
@@ -219,16 +224,8 @@ public class HelloController {
         Position pos;
         if ((pos = findFreeCell()) != null) {
             AutonomusRobot new_robot = AutonomusRobot.create(env, pos, this, robotImageView);
-            env.addRobot(new_robot);
 
-            // Calculate actual position (x, y) within the gameField pane
-            double x = pos.getRow() * cellWidth + (cellWidth - imageSize) / 2;
-            double y = pos.getCol() * cellHeight + (cellHeight - imageSize) / 2;
-
-            robotImageView.setLayoutX(x);
-            robotImageView.setLayoutY(y);
-
-            gameField.getChildren().add(robotImageView);
+            createRobot(new_robot);
 
             autoRobotList.add(new_robot);
             this.addMessage(new_robot.getPosition(), new_robot, Log.MovementType.ADD, new_robot.angle());
@@ -352,22 +349,64 @@ public class HelloController {
             try {
                 ConfigurationLoader.Configuration config = ConfigurationLoader.loadConfiguration(selectedFile.getPath());
                 System.out.println(config);
+
                 env.clear();
 
-                // Add robots from the configuration
-                for (ConfigurationLoader.Robot robotConfig : config.getRobots()) {
-                    AutonomusRobot robot = AutonomusRobot.create(env, robotConfig.getPosition(), this, new ImageView(robotImage));
-                    env.addRobot(robot);
-                    autoRobotList.add(robot);
-                    gameField.getChildren().add(robot.getImageView()); // Add the robot's ImageView to the game field
+                for (ConfigurationLoader.Robot robot : config.getRobots()) {
+                    ImageView robotImageView = createRobotImageView();
+                        if (robot.getType().equals("controlled")) {
+                            ControlledRobot new_robot = ControlledRobot.create(env, robot.getPosition(), this, robotImageView);
+                            if (new_robot == null) {
+                                System.err.println("Configuration is not valid. Robot cannot be created.");
+                                return;
+                            }
+                            robotImageView.setOnMouseClicked(mouseEvent -> {
+                                if (!isPlaying) {
+                                    // Display an error message to the user
+                                    showSimulationAlert();
+                                    return;
+                                }
+                                for (ControlledRobot otherRobot : controlledRobotList) {
+                                    otherRobot.setSelected(false);
+                                }
+                                new_robot.setSelected(true);
+                                controlledRobotIndex = new_robot; // update the selected robot
+                            });
+                            controlledRobotList.add((ControlledRobot) new_robot);
+                            createRobot(new_robot);
+
+                        } else {
+                            AutonomusRobot new_robot = AutonomusRobot.create(env, robot.getPosition(), this, robotImageView);
+                            if (new_robot == null) {
+                                System.err.println("Configuration is not valid. Robot cannot be created.");
+                                return;
+                            }
+                            autoRobotList.add((AutonomusRobot) new_robot);
+                            createRobot(new_robot);
+                        }
+
                 }
-                // Add obstacles
-                for (ConfigurationLoader.Obstacle obstacleConfig : config.getObstacles()) {
-                    env.createObstacleAt(obstacleConfig.getPosition().getRow(), obstacleConfig.getPosition().getCol());
+
+                for (ConfigurationLoader.Obstacle obstacle : config.getObstacles()) {
+                    ImageView bushImageView = new ImageView(bushImage);
+                    bushImageView.getProperties().put("type", "obstacle");
+                    bushImageView.setFitWidth(imageSize);
+                    bushImageView.setFitHeight(imageSize);
+
+                    Position pos = obstacle.getPosition();
+                    env.createObstacleAt(pos.getRow(), pos.getCol());
+
+                    double x = pos.getRow() * cellWidth + (cellWidth - imageSize) / 2;
+                    double y = pos.getCol() * cellHeight + (cellHeight - imageSize) / 2;
+
+                    bushImageView.setLayoutX(x);
+                    bushImageView.setLayoutY(y);
+
+                    gameField.getChildren().add(bushImageView);
                 }
 
                 // Redraw the environment
-                ViewPainter.paint(messagesList);
+
 
             } catch (IOException e) {
                 e.printStackTrace();
