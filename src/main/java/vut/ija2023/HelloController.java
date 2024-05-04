@@ -76,6 +76,8 @@ public class HelloController {
 
     @FXML
     private Button changeAngle;
+    @FXML
+    private Button changeAngleReverse;
 
     @FXML
     private Button addConfiguration;
@@ -285,6 +287,14 @@ public class HelloController {
         for (ControlledRobot robot : controlledRobotList) {
             if (robot.isSelected()) {
                 controlledRobotIndex.turn();
+            }
+        }
+    }
+    @FXML
+    public void onChangeAngleReverse(ActionEvent actionEvent) {
+        for (ControlledRobot robot : controlledRobotList) {
+            if (robot.isSelected()) {
+                controlledRobotIndex.turnReverse();
             }
         }
     }
