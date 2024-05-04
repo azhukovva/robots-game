@@ -18,6 +18,7 @@ import vut.ija2023.enviroment.Position;
 import vut.ija2023.room.AutonomusRobot;
 import vut.ija2023.room.ControlledRobot;
 import vut.ija2023.room.Room;
+import javafx.scene.control.Alert;
 
 
 import java.io.InputStream;
@@ -103,10 +104,18 @@ public class HelloController {
         messagesList.clear();
     }
 
+    private void showSimulationAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Simulation Error");
+        alert.setHeaderText(null);
+        alert.setContentText("You must start the simulation first by clicking the play button.");
+        alert.showAndWait();
+    }
+
     Position findFreeCell () {
         Random random = new Random();
         Position pos;
-        int maxAttempts = 64; // Maximum number of attempts to find a free cell
+        int maxAttempts = 100; // Maximum number of attempts to find a free cell
         int attempt = 0;
         int row, col;
         do {
@@ -153,6 +162,11 @@ public class HelloController {
             controlledRobotList.add(new_robot);
 
             robotImageView.setOnMouseClicked(mouseEvent -> {
+                if (!isPlaying) {
+                    // Display an error message to the user
+                    showSimulationAlert();
+                    return;
+                }
                 for (ControlledRobot otherRobot : controlledRobotList) {
                     otherRobot.setSelected(false);
                 }
