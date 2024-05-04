@@ -25,6 +25,7 @@ public class HelloController {
 
     private List<NotifyMessage> messagesList = new ArrayList<NotifyMessage>();
     private List<AutonomusRobot> autoRobotList = new ArrayList<AutonomusRobot>();
+    private List<ControlledRobot> controlledRobotList = new ArrayList<ControlledRobot>();
 
     private Timeline timeline;
     private boolean isPlaying = false;
@@ -137,7 +138,7 @@ public class HelloController {
 
         Position pos;
         if ((pos= findFreeCell()) != null) {
-            Robot new_robot = ControlledRobot.create(env, pos, this, robotImageView);
+            ControlledRobot new_robot = ControlledRobot.create(env, pos, this, robotImageView);
             env.addRobot(new_robot);
 
             // Calculate actual position (x, y) within the gameField pane
@@ -150,6 +151,15 @@ public class HelloController {
             gameField.getChildren().add(robotImageView);
 
             controlledRobotIndex = new_robot;
+            controlledRobotList.add(new_robot);
+
+            robotImageView.setOnMouseClicked(mouseEvent -> {
+                for (ControlledRobot otherRobot : controlledRobotList) {
+                    otherRobot.setSelected(false);
+                }
+                new_robot.setSelected(true);
+                controlledRobotIndex = new_robot; // update the selected robot
+            });
         }
     }
 
@@ -239,16 +249,25 @@ public class HelloController {
     }
     @FXML
     public void onMoveUp(ActionEvent actionEvent) {
-        if(controlledRobotIndex!=null){
-            controlledRobotIndex.move();
+        for (ControlledRobot robot : controlledRobotList) {
+            if (robot.isSelected()) {
+                if(controlledRobotIndex!=null){
+                    controlledRobotIndex.move();
+                }
+            }
         }
+//        if(controlledRobotIndex!=null){
+//            controlledRobotIndex.move();
+//        }
     }
     @FXML
     public void onChangeAngle(ActionEvent actionEvent) {
-        controlledRobotIndex.turn();
-    }
-    @FXML
-    public void onMoveLeft(ActionEvent actionEvent) {
+        for (ControlledRobot robot : controlledRobotList) {
+            if (robot.isSelected()) {
+                controlledRobotIndex.turn();
+            }
+        }
+        //controlledRobotIndex.turn();
     }
 
     public void addMessage(Position pos, AbstractRobot abstractRobot, String type) {

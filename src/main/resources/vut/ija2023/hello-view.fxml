@@ -5,9 +5,13 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import java.net.URL?>
 
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="534.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vut.ija2023.HelloController">
+   <stylesheets>
+      <URL value="@styles.css" />
+   </stylesheets>
    <children>
       <Pane fx:id="gameField" layoutX="79.0" layoutY="26.0" prefHeight="360.0" prefWidth="360.0">
          <children>
@@ -18,9 +22,9 @@
             </ImageView>
          </children>
       </Pane>
-      <Button fx:id="addRobotBtn" layoutX="95.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddRobot" text="Add Controlled Robot" />
-      <Button fx:id="addAutoRobotBtn" layoutX="279.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddAutoRobot" text="Add Autonomus Robot" />
-      <Button fx:id="addObstacleBtn" layoutX="95.0" layoutY="502.0" mnemonicParsing="false" onAction="#onAddObstacle" text="Add Obstacle" />
+      <Button fx:id="addRobotBtn" layoutX="95.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddRobot" text="Add Controlled Robot" styleClass="add-robot"/>
+      <Button fx:id="addAutoRobotBtn" layoutX="279.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddAutoRobot" text="Add Autonomus Robot" styleClass="add-robot"/>
+      <Button fx:id="addObstacleBtn" layoutX="95.0" layoutY="502.0" mnemonicParsing="false" onAction="#onAddObstacle" text="Add Obstacle" styleClass="add-obstacle"/>
 
       <Button fx:id="addConfiguration" layoutX="95.0" layoutY="545.0" mnemonicParsing="false" text="Add Configuration" />
       <Button fx:id="newGame" layoutX="340.0" layoutY="545.0" mnemonicParsing="false" text="New Game" onAction="#onNewGame"/>

@@ -11,6 +11,13 @@ public class ControlledRobot extends AbstractRobot implements Robot {
     private Position position;
     private Environment environment;
     private int angle = 0;
+    private boolean selected = false;
+    public boolean isSelected() {
+        return selected;
+    }
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 
     private ControlledRobot(Environment env, Position pos, HelloController controller, ImageView view) {
         super(controller, view);
