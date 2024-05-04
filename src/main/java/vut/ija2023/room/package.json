@@ -1,0 +1,19 @@
+{
+  "robots": [
+    {
+      "position": {
+        "x": 1,
+        "y": 2
+      },
+      "angle": 90
+    }
+  ],
+  "obstacles": [
+    {
+      "position": {
+        "x": 3,
+        "y": 4
+      }
+    }
+  ]
+}

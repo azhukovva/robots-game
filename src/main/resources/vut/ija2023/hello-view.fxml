@@ -30,7 +30,7 @@
       <Button fx:id="addAutoRobotBtn" layoutX="279.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddAutoRobot" text="Add Autonomus Robot" styleClass="add-robot"/>
       <Button fx:id="addObstacleBtn" layoutX="95.0" layoutY="500.0" mnemonicParsing="false" onAction="#onAddObstacle" text="Add Obstacle" styleClass="add-obstacle"/>
 
-      <Button fx:id="addConfiguration" layoutX="95.0" layoutY="545.0" mnemonicParsing="false" text="Add Configuration" styleClass="config-btn"/>
+      <Button fx:id="addConfiguration" layoutX="95.0" layoutY="545.0" mnemonicParsing="false" text="Add Configuration" onAction="#onAddConfig" styleClass="config-btn"/>
       <Button fx:id="newGame" layoutX="340.0" layoutY="545.0" mnemonicParsing="false" text="New Game" onAction="#onNewGame" styleClass="config-btn"/>
 
       <Button fx:id="playBtn" layoutX="95.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onPlay" styleClass="play-btn">

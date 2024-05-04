@@ -1,5 +1,7 @@
 package vut.ija2023;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -12,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import vut.ija2023.common.*;
 import vut.ija2023.enviroment.Position;
@@ -87,7 +90,7 @@ public class HelloController {
 
     private Robot controlledRobotIndex;
 
-    private Environment env = Room.create(8,8);
+    private Environment env = Room.create(8, 8);
 
     // Set the static size of the images
     double imageSize = 45.0;
@@ -114,7 +117,7 @@ public class HelloController {
         alert.showAndWait();
     }
 
-    Position findFreeCell () {
+    Position findFreeCell() {
         Random random = new Random();
         Position pos;
         int maxAttempts = 100; // Maximum number of attempts to find a free cell
@@ -126,8 +129,8 @@ public class HelloController {
             col = random.nextInt(8);
             pos = new Position(row, col);
             attempt++;
-        } while ( (env.obstacleAt(pos) || env.robotAt(pos) ) && attempt < maxAttempts);
-        if (attempt >= maxAttempts ) {
+        } while ((env.obstacleAt(pos) || env.robotAt(pos)) && attempt < maxAttempts);
+        if (attempt >= maxAttempts) {
             System.err.println("Unable to find a free cell to place the robot");
             return null;
         }
@@ -147,7 +150,7 @@ public class HelloController {
         robotImageView.setFitHeight(imageSize);
 
         Position pos;
-        if ((pos= findFreeCell()) != null) {
+        if ((pos = findFreeCell()) != null) {
             ControlledRobot new_robot = ControlledRobot.create(env, pos, this, robotImageView);
             env.addRobot(new_robot);
 
@@ -231,7 +234,7 @@ public class HelloController {
         robotImageView.setFitHeight(imageSize);
 
         Position pos;
-        if ((pos= findFreeCell()) != null) {
+        if ((pos = findFreeCell()) != null) {
             AutonomusRobot new_robot = AutonomusRobot.create(env, pos, this, robotImageView);
             env.addRobot(new_robot);
 
@@ -272,16 +275,18 @@ public class HelloController {
             setupTimeline();
         });
     }
+
     @FXML
     public void onMoveUp(ActionEvent actionEvent) {
         for (ControlledRobot robot : controlledRobotList) {
             if (robot.isSelected()) {
-                if(controlledRobotIndex!=null){
+                if (controlledRobotIndex != null) {
                     controlledRobotIndex.move();
                 }
             }
         }
     }
+
     @FXML
     public void onChangeAngle(ActionEvent actionEvent) {
         for (ControlledRobot robot : controlledRobotList) {
@@ -290,6 +295,7 @@ public class HelloController {
             }
         }
     }
+
     @FXML
     public void onChangeAngleReverse(ActionEvent actionEvent) {
         for (ControlledRobot robot : controlledRobotList) {
@@ -307,10 +313,12 @@ public class HelloController {
     public void onPlay(ActionEvent actionEvent) {
         togglePlayButton();
     }
+
     @FXML
     public void onReplay(ActionEvent actionEvent) {
 
     }
+
     private void togglePlayButton() {
 
         if (isPlaying) {
@@ -340,5 +348,44 @@ public class HelloController {
         timeline.stop();
         isPlaying = false;
         playBtn.setGraphic(playIconView);
+    }
+
+    @FXML
+    public void onAddConfig(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Configuration File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("JSON Files", "*.json"),
+                new FileChooser.ExtensionFilter("All Files", "*.*"));
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+
+        if (selectedFile != null) {
+            try {
+                ConfigurationLoader.Configuration config = ConfigurationLoader.loadConfiguration(selectedFile.getPath());
+                System.out.println(config);
+                env.clear();
+
+                // Add robots from the configuration
+                for (ConfigurationLoader.Robot robotConfig : config.getRobots()) {
+                    AutonomusRobot robot = AutonomusRobot.create(env, robotConfig.getPosition(), this, new ImageView(robotImage));
+                    env.addRobot(robot);
+                    autoRobotList.add(robot);
+                    gameField.getChildren().add(robot.getImageView()); // Add the robot's ImageView to the game field
+                }
+                // Add obstacles
+                for (ConfigurationLoader.Obstacle obstacleConfig : config.getObstacles()) {
+                    env.createObstacleAt(obstacleConfig.getPosition().getRow(), obstacleConfig.getPosition().getCol());
+                }
+
+                // Redraw the environment
+                ViewPainter.paint(messagesList);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("File selection cancelled.");
+        }
     }
 }
