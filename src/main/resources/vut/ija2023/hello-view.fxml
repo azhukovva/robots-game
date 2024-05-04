@@ -21,8 +21,10 @@
       <Button fx:id="addRobotBtn" layoutX="95.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddRobot" text="Add Controlled Robot" />
       <Button fx:id="addAutoRobotBtn" layoutX="279.0" layoutY="456.0" mnemonicParsing="false" onAction="#onAddAutoRobot" text="Add Autonomus Robot" />
       <Button fx:id="addObstacleBtn" layoutX="95.0" layoutY="502.0" mnemonicParsing="false" onAction="#onAddObstacle" text="Add Obstacle" />
+
       <Button layoutX="95.0" layoutY="545.0" mnemonicParsing="false" text="Add Configuration" />
-      <Button layoutX="95.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0">
+
+      <Button fx:id="playBtn" layoutX="95.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onPlay">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -32,7 +34,7 @@
          </graphic>
       </Button>
 
-      <Button layoutX="151.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0">
+      <Button fx:id="replayBtn" layoutX="151.0" layoutY="403.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="37.0" onAction="#onReplay">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -41,8 +43,9 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button onAction="#onMoveRight"
-              fx:id="moveRight"
+
+      <Button onAction="#onChangeAngle"
+              fx:id="changeAngle"
               layoutX="379.0"
               layoutY="404.0"
               mnemonicParsing="false"
@@ -51,7 +54,7 @@
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/right.png"/>
+                  <Image url="@images/angle.png"/>
                </image>
             </ImageView>
          </graphic>

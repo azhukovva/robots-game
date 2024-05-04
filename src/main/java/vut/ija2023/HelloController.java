@@ -1,9 +1,7 @@
 package vut.ija2023;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,7 +20,6 @@ import vut.ija2023.room.ControlledRobot;
 import vut.ija2023.room.Room;
 
 import java.io.InputStream;
-import java.util.Random;
 
 public class HelloController {
 
@@ -54,16 +51,16 @@ public class HelloController {
     private Pane robot;
 
     @FXML
-    private Button moveDown;
-
-    @FXML
     private Button moveUp;
 
     @FXML
-    private Button moveLeft;
+    private Button playBtn;
 
     @FXML
-    private Button moveRight;
+    private Button replayBtn;
+
+    @FXML
+    private Button changeAngle;
 
     private Robot controlledRobotIndex;
 
@@ -229,7 +226,7 @@ public class HelloController {
         }
     }
     @FXML
-    public void onMoveRight(ActionEvent actionEvent) {
+    public void onChangeAngle(ActionEvent actionEvent) {
         controlledRobotIndex.turn();
     }
     @FXML
@@ -239,4 +236,40 @@ public class HelloController {
     public void addMessage(Position pos, AbstractRobot abstractRobot, String type) {
         messagesList.add(new NotifyMessage(pos, abstractRobot, type));
     }
+
+    @FXML
+    public void onPlay(ActionEvent actionEvent) {
+        // Load the play and stop icons
+        Image playIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png")));
+        Image stopIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/stop.png")));
+
+        ImageView playIconView = new ImageView(playIcon);
+        ImageView stopIconView = new ImageView(stopIcon);
+
+        playIconView.setFitHeight(20.0);
+        playIconView.setFitWidth(33.0);
+        playIconView.setPickOnBounds(true);
+        playIconView.setPreserveRatio(true); // image will not be distorted or stretched
+
+        stopIconView.setFitHeight(20.0);
+        stopIconView.setFitWidth(33.0);
+        stopIconView.setPickOnBounds(true);
+        stopIconView.setPreserveRatio(true);
+
+        if (isPlaying) {
+            playBtn.setGraphic(playIconView);
+            isPlaying = false;
+        } else {
+            playBtn.setGraphic(stopIconView);
+            isPlaying = true;
+        }
+    }
+
+    private boolean isPlaying = false;
+    @FXML
+    public void onReplay(ActionEvent actionEvent) {
+
+    }
+
+
 }
