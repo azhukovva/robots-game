@@ -30,12 +30,15 @@ public class HelloController {
     private Timeline timeline;
     private boolean isPlaying = false;
 
+
+    private final ImageView playIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png"))));
+    private ImageView stopIconView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/stop.png"))));
+
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
-
 
     @FXML
     private Button addObstacleBtn;
@@ -86,9 +89,6 @@ public class HelloController {
     }
 
     private void updateSimulation() {
-        if (!isPlaying) {
-            return;
-        }
 
         for (AutonomusRobot robot : autoRobotList) {
             robot.move();
@@ -241,10 +241,20 @@ public class HelloController {
         assert gameField != null : "fx:id=\"gameField\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert obstacle != null : "fx:id=\"obstacle\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert robot != null : "fx:id=\"robot\" was not injected: check your FXML file 'hello-view.fxml'.";
+
+        playIconView.setFitHeight(20.0);
+        playIconView.setFitWidth(33.0);
+        playIconView.setPickOnBounds(true);
+        playIconView.setPreserveRatio(true);
+
+        stopIconView.setFitHeight(20.0);
+        stopIconView.setFitWidth(33.0);
+        stopIconView.setPickOnBounds(true);
+        stopIconView.setPreserveRatio(true);
+
         Platform.runLater(() -> {
             ViewPainter.setGameField(gameField, 8);
             setupTimeline();
-            timeline.play();
         });
     }
     @FXML
@@ -279,31 +289,17 @@ public class HelloController {
 
     }
     private void togglePlayButton() {
-        // Load the play and stop icons
-        Image playIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png")));
-        Image stopIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/stop.png")));
-
-        ImageView playIconView = new ImageView(playIcon);
-        ImageView stopIconView = new ImageView(stopIcon);
-
-        playIconView.setFitHeight(20.0);
-        playIconView.setFitWidth(33.0);
-        playIconView.setPickOnBounds(true);
-        playIconView.setPreserveRatio(true);
-
-        stopIconView.setFitHeight(20.0);
-        stopIconView.setFitWidth(33.0);
-        stopIconView.setPickOnBounds(true);
-        stopIconView.setPreserveRatio(true);
 
         if (isPlaying) {
             playBtn.setGraphic(playIconView);
             playBtn.getStyleClass().remove("play-btn-active");
             isPlaying = false;
+            timeline.stop();
         } else {
             playBtn.setGraphic(stopIconView);
             playBtn.getStyleClass().add("play-btn-active");
             isPlaying = true;
+            timeline.play();
         }
     }
 
@@ -318,13 +314,8 @@ public class HelloController {
                         "obstacle".equals(((ImageView) node).getProperties().get("type"))));
 
         // Reset the isPlaying state and the play button icon
+        timeline.stop();
         isPlaying = false;
-        Image playIcon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/vut/ija2023/images/play.png")));
-        ImageView playIconView = new ImageView(playIcon);
-        playIconView.setFitHeight(20.0);
-        playIconView.setFitWidth(33.0);
-        playIconView.setPickOnBounds(true);
-        playIconView.setPreserveRatio(true);
         playBtn.setGraphic(playIconView);
     }
 }
