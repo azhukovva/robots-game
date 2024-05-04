@@ -1,6 +1,6 @@
 /* styles.css */
 .anchor-pane {
-    /*-fx-background-image: url('images/bg3.jpg');*/
+    -fx-background-image: url('images/anchor-pane.jpg');
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
 }
