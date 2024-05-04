@@ -45,20 +45,26 @@ public class ControlledRobot extends AbstractRobot implements Robot {
     }
 
     @Override
-    public void turn() {
-        super.notifyController(position, Log.MovementType.TURN, angle);
-        angle = (angle + 1) % 8;
-    }
-
-    @Override
     public int angle() {
         return this.angle*45;
     }
 
+    public void rotateImageView() {
+        this.getImageView().setRotate(this.angle());
+    }
+
     @Override
-    public void turn(int i) {
-        angle = (angle+i)%8;
-        super.notifyController(position,Log.MovementType.TURN, angle);
+    public void turn() {
+        super.notifyController(position, Log.MovementType.TURN, angle);
+        angle = (angle + 1) % 8;
+        rotateImageView();
+    }
+
+    @Override
+    public void turnReverse() {
+        super.notifyController(position, Log.MovementType.TURN, angle);
+        angle = (angle - 1 + 8) % 8; // Add 8 before taking modulus to handle negative values
+        rotateImageView();
     }
 
     /**
