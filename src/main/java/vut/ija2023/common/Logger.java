@@ -14,6 +14,12 @@ public class Logger {
     // Map to track the previous movement type for each robot
     private Map<Robot, MovementType> previousMovementType = new HashMap<>();
 
+    public void log(List<NotifyMessage> messages) {
+        for (NotifyMessage msg : messages) {
+            handleMessage(msg);
+        }
+    }
+
     public void handleMessage(NotifyMessage notifyMessage) {
         Position pos = notifyMessage.getPos();
         Robot robot = notifyMessage.getRobot();
@@ -40,6 +46,13 @@ public class Logger {
                 previousMovementType.put(robot, message);
             }
         }
+    }
+
+    public void printLogs() {
+        robotMessages.forEach((robot, logs) -> {
+            System.out.println("Logs for Robot: " + robot);
+            logs.forEach(log -> System.out.println("Step: " + log.getStepCount() + ", Position: " + log.getStartingPosition() + ", Movement: " + log.getMovementType()));
+        });
     }
 }
 

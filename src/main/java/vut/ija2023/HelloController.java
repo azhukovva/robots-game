@@ -87,7 +87,7 @@ public class HelloController {
 
     private void updateSimulation() {
         ViewPainter.paint(messagesList);
-        //Logger.log(messagesList);
+        logger.log(messagesList);
         messagesList.clear();
     }
 
