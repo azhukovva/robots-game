@@ -5,7 +5,8 @@
         "x": 1,
         "y": 2
       },
-      "angle": 90
+      "angle": 90,
+      "type": "auto"
     }
   ],
   "obstacles": [
