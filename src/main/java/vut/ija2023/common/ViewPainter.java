@@ -8,18 +8,33 @@ import vut.ija2023.common.AbstractRobot;
 
 import java.util.List;
 
+/**
+ * Handles the painting of the game view.
+ * This includes updating the positions and angles of robots on the game field.
+ */
 public class ViewPainter {
 
     private static double cellWidth;  // width of each grid cell in the pane
     private static double cellHeight; // height of each grid cell in the pane
     private static Pane gameField;    // the game field pane to draw onto
 
+    /**
+     * Sets the game field pane and calculates the dimensions of each grid cell.
+     *
+     * @param pane the game field pane
+     * @param gridSize the size of the grid
+     */
     public static void setGameField(Pane pane, int gridSize) {
         gameField = pane;
         cellWidth = gameField.getWidth() / gridSize;
         cellHeight = gameField.getHeight() / gridSize;
     }
 
+    /**
+     * Paints the game view based on a list of notify messages.
+     *
+     * @param messages the list of notify messages
+     */
     public static void paint(List<NotifyMessage> messages) {
         if(messages == null) {
             return;
@@ -37,11 +52,22 @@ public class ViewPainter {
         }
     }
 
+    /**
+     * Updates the angle of a robot on the game field.
+     *
+     * @param robot the robot to update
+     */
     private static void updateRobotAngle(Robot robot) {
         robot.getImageView().setRotate(robot.angle());
         robot.toggleFlag();
     }
 
+    /**
+     * Updates the position of a robot on the game field.
+     *
+     * @param robot the robot to update
+     * @param pos the new position of the robot
+     */
     private static void updateRobotPosition(Robot robot, Position pos) {
         ImageView view = robot.getImageView();
 

@@ -29,6 +29,10 @@ import javafx.scene.control.Alert;
 
 import java.util.Random;
 
+/**
+ * Controller class for the Bots application.
+ * Handles user interactions and updates the game state.
+ */
 public class BotsController {
 
     private List<NotifyMessage> messagesList = new ArrayList<NotifyMessage>();
@@ -100,11 +104,17 @@ public class BotsController {
     // Set the static size of the images
     double imageSize = 45.0;
 
+    /**
+     * Sets up the timeline for the simulation.
+     */
     private void setupTimeline() {
         timeline = new Timeline(new KeyFrame(Duration.seconds(.2), e -> updateSimulation()));
         timeline.setCycleCount(Timeline.INDEFINITE);
     }
 
+    /**
+     * Updates the simulation state.
+     */
     private void updateSimulation() {
         for (AutonomusRobot robot : autoRobotList) {
             robot.move();
@@ -114,6 +124,9 @@ public class BotsController {
         messagesList.clear();
     }
 
+    /**
+     * Shows an alert if the simulation is not running.
+     */
     private void showSimulationAlert() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Simulation Error");
@@ -122,6 +135,11 @@ public class BotsController {
         alert.showAndWait();
     }
 
+    /**
+     * Finds a free cell in the environment.
+     *
+     * @return the position of the free cell, or null if no free cell is found
+     */
     Position findFreeCell() {
         Random random = new Random();
         Position pos;
@@ -142,6 +160,11 @@ public class BotsController {
         return pos;
     }
 
+    /**
+     * Creates an ImageView for a robot.
+     *
+     * @return the created ImageView
+     */
     ImageView createRobotImageView() {
         ImageView robotImageView = new ImageView(robotImage);
         robotImageView.getProperties().put("type", "robot");
@@ -150,6 +173,11 @@ public class BotsController {
         return robotImageView;
     }
 
+    /**
+     * Creates a robot and adds it to the game field.
+     *
+     * @param new_robot the robot to be added
+     */
     void createRobot(Robot new_robot){
         env.addRobot(new_robot);
 
@@ -157,16 +185,24 @@ public class BotsController {
         double x = new_robot.getPosition().getRow() * cellWidth + (cellWidth - imageSize) / 2;
         double y = new_robot.getPosition().getCol() * cellHeight + (cellHeight - imageSize) / 2;
 
+        new_robot.getImageView().getStyleClass().add("robot");
+
         new_robot.getImageView().setLayoutX(x);
         new_robot.getImageView().setLayoutY(y);
 
         gameField.getChildren().add(new_robot.getImageView());
     }
 
+    /**
+     * Handles the event of adding a robot.
+     *
+     * @param event the event that triggered this method
+     */
     @FXML
     void onAddRobot(ActionEvent event) {
         // Calculate the width and height of each cell in the grid
         ImageView robotImageView = createRobotImageView();
+
 
         Position pos;
         if ((pos = findFreeCell()) != null) {
@@ -233,6 +269,9 @@ public class BotsController {
         }
     }
 
+    /**
+     * Initializes the controller.
+     */
     @FXML
     void initialize() {
         assert addObstacleBtn != null : "fx:id=\"addObstacleBtn\" was not injected: check your FXML file 'hello-view.fxml'.";
@@ -278,6 +317,13 @@ public class BotsController {
         });
     }
 
+    /**
+     * Handles the event of moving the selected robot up.
+     * If the simulation is not running, it shows an alert to the user.
+     * If a robot is selected, it moves the robot up.
+     *
+     * @param actionEvent the event that triggered this method
+     */
     @FXML
     public void onMoveUp(ActionEvent actionEvent) {
         if (!isPlaying) {
@@ -294,6 +340,11 @@ public class BotsController {
         }
     }
 
+    /**
+     * Changes the angle of the selected robot.
+     *
+     * @param actionEvent the event that triggered this method
+     */
     @FXML
     public void onChangeAngle(ActionEvent actionEvent) {
         if (!isPlaying) {
@@ -308,6 +359,11 @@ public class BotsController {
         }
     }
 
+    /**
+     * Changes the angle of the selected robot in the reverse direction(anti-clockwise).
+     *
+     * @param actionEvent the event that triggered this method
+     */
     @FXML
     public void onChangeAngleReverse(ActionEvent actionEvent) {
         if (!isPlaying) {
@@ -322,11 +378,24 @@ public class BotsController {
         }
     }
 
+    /**
+     * Adds a message to the messages list.
+     *
+     * @param pos the position of the robot
+     * @param abstractRobot the robot that moved
+     * @param type the type of movement
+     * @param angle the angle of movement
+     */
     public void addMessage(Position pos, AbstractRobot abstractRobot, Log.MovementType type, int angle) {
         messagesList.add(new NotifyMessage(pos, abstractRobot, type, angle));
     }
 
 
+    /**
+     * Starts or stops the game.
+     *
+     * @param actionEvent the event that triggered this method
+     */
     @FXML
     public void onPlay(ActionEvent actionEvent) {
         togglePlayButton();
@@ -337,6 +406,9 @@ public class BotsController {
 
     }
 
+    /**
+     * Toggles the play button state.
+     */
     private void togglePlayButton() {
 
         if (isPlaying) {
@@ -352,6 +424,11 @@ public class BotsController {
         }
     }
 
+    /**
+     * Resets the game to its initial state.
+     *
+     * @param actionEvent the event that triggered this method
+     */
     @FXML
     public void onNewGame(ActionEvent actionEvent) {
         // Clear the list of autonomous robots
@@ -368,6 +445,11 @@ public class BotsController {
         playBtn.setGraphic(playIconView);
     }
 
+    /**
+     * Loads a new game configuration from a file.
+     *
+     * @param actionEvent the event that triggered this method
+     */
     @FXML
     public void onAddConfig(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();

@@ -9,28 +9,39 @@ import vut.ija2023.common.Robot;
 import vut.ija2023.enviroment.Position;
 
 
+/**
+ * Represents an autonomous robot that can move within an environment.
+ */
 public class AutonomusRobot extends AbstractRobot implements Robot {
     private Position position;
     private Environment environment;
     private int angle = 0;
-    private AutonomusRobot(Environment env, Position pos, BotsController controller, ImageView view)
-    {
+
+    /**
+     * Constructs an autonomous robot with the specified environment, position, controller, and view.
+     *
+     * @param env        the environment in which the robot operates
+     * @param pos        the initial position of the robot
+     * @param controller the controller for the robot
+     * @param view       the image view representing the robot
+     */
+    private AutonomusRobot(Environment env, Position pos, BotsController controller, ImageView view) {
         super(controller, view);
         this.environment = env;
         this.position = pos;
     }
 
+    /**
+     * Creates an autonomous robot with the specified environment, position, controller, and view.
+     *
+     * @param env        the environment in which the robot operates
+     * @param pos        the initial position of the robot
+     * @param controller the controller for the robot
+     * @param view       the image view representing the robot
+     * @return the created autonomous robot, or null if creation fails
+     */
     public static AutonomusRobot create(Environment env, Position pos, BotsController controller, ImageView view) {
-        if (env == null || pos == null) {
-            return null;
-        }
-        if (!env.containsPosition(pos)) {
-            return null;
-        }
-        if (env.obstacleAt(pos)) {
-            return null;
-        }
-        if (env.robotAt(pos)) {
+        if (env == null || pos == null || env.obstacleAt(pos) || env.robotAt(pos)) {
             return null;
         }
         AutonomusRobot thisBot = new AutonomusRobot(env, pos, controller, view);
@@ -38,6 +49,11 @@ public class AutonomusRobot extends AbstractRobot implements Robot {
         return thisBot;
     }
 
+    /**
+     * Moves the robot forward in the current direction.
+     *
+     * @return true if the movement was successful, false otherwise
+     */
     public boolean move() {
         if (super.messageFlag) {
             return false;
@@ -66,17 +82,30 @@ public class AutonomusRobot extends AbstractRobot implements Robot {
         return false;
     }
 
+    /**
+     * Retrieves the current position of the robot.
+     *
+     * @return the current position of the robot
+     */
     @Override
     public Position getPosition() {
         return this.position;
     }
 
+    /**
+     * Retrieves the current angle of the robot.
+     *
+     * @return the current angle of the robot
+     */
     @Override
     public int angle() {
 
         return this.angle*45;
     }
 
+    /**
+     * Turns the robot to the right by 45 degrees.
+     */
     public void turn() {
         if (super.messageFlag) {
             return;
@@ -84,6 +113,9 @@ public class AutonomusRobot extends AbstractRobot implements Robot {
         super.notifyController(position, MovementType.TURN, angle);
         angle = (angle + 1) % 8;
     }
+    /**
+     * Turns the robot to the left by 45 degrees.
+     */
     public void turnReverse() {
         if (super.messageFlag) {
             return;
@@ -92,6 +124,11 @@ public class AutonomusRobot extends AbstractRobot implements Robot {
         angle = (angle - 1) % 8;
     }
 
+    /**
+     * Checks if the robot can move forward in the current direction.
+     *
+     * @return true if the robot can move forward, false otherwise
+     */
     @Override
     public boolean canMove() {
         int x=0, y=0;
