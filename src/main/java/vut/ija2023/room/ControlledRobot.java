@@ -96,6 +96,9 @@ public class ControlledRobot extends AbstractRobot implements Robot {
      */
     @Override
     public boolean move() {
+        if (super.messageFlag) {
+            return false;
+        }
         if(canMove()){
             int x=0, y=0;
             switch (angle){

@@ -39,6 +39,9 @@ public class AutonomusRobot extends AbstractRobot implements Robot {
     }
 
     public boolean move() {
+        if (super.messageFlag) {
+            return false;
+        }
         if(canMove()){
             int x=0, y=0;
             switch (angle){

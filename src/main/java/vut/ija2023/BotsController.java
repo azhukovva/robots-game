@@ -95,7 +95,7 @@ public class BotsController {
 
     private Robot controlledRobotIndex;
 
-    private Environment env = Room.create(8, 8);
+    private Environment env;
 
     // Set the static size of the images
     double imageSize = 45.0;
@@ -166,7 +166,7 @@ public class BotsController {
     @FXML
     void onAddRobot(ActionEvent event) {
         // Calculate the width and height of each cell in the grid
-
+        gameField.requestFocus();
         ImageView robotImageView = createRobotImageView();
 
         Position pos;
@@ -257,7 +257,36 @@ public class BotsController {
             ViewPainter.setGameField(gameField, 8);
             cellWidth = gameField.getWidth() / 8;
             cellHeight = gameField.getHeight() / 8;
+            env = Room.create((int) cellHeight, (int) cellWidth);
             setupTimeline();
+            gameField.setFocusTraversable(true);
+            gameField.requestFocus();// Ensure the gameField can receive key events
+
+            gameField.setOnKeyPressed(event -> {
+                switch (event.getCode()) {
+                    case W: // Assuming 'W' is for moving up
+                        onMoveUp(new ActionEvent());
+                        break;
+                    case A: // Assuming 'A' is for turning left
+                        onChangeAngleReverse(new ActionEvent());
+                        break;
+                    case D: // Assuming 'D' is for turning right
+                        onChangeAngle(new ActionEvent());
+                        break;
+                    case UP: // Arrow up for moving up
+                        onMoveUp(new ActionEvent());
+                        break;
+                    case LEFT: // Arrow left for turning left
+                        onChangeAngleReverse(new ActionEvent());
+                        break;
+                    case RIGHT: // Arrow right for turning right
+                        onChangeAngle(new ActionEvent());
+                        break;
+                    default:
+                        break;
+                }
+                event.consume(); // Consume the event to prevent it from propagating further
+            });
         });
     }
 
