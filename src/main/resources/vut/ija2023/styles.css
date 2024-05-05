@@ -59,3 +59,8 @@
     -fx-background-color: #2b73c7;
     -fx-text-fill:  #ececec;
 }
+
+
+.robot {
+    -fx-cursor: hand;
+}

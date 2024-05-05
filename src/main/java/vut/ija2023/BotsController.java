@@ -157,6 +157,8 @@ public class BotsController {
         double x = new_robot.getPosition().getRow() * cellWidth + (cellWidth - imageSize) / 2;
         double y = new_robot.getPosition().getCol() * cellHeight + (cellHeight - imageSize) / 2;
 
+        new_robot.getImageView().getStyleClass().add("robot");
+
         new_robot.getImageView().setLayoutX(x);
         new_robot.getImageView().setLayoutY(y);
 
@@ -168,6 +170,7 @@ public class BotsController {
         // Calculate the width and height of each cell in the grid
 
         ImageView robotImageView = createRobotImageView();
+
 
         Position pos;
         if ((pos = findFreeCell()) != null) {
