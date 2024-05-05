@@ -174,14 +174,14 @@ public class HelloController {
             createRobot(new_robot);
 
             controlledRobotIndex = new_robot;
+
+            for (ControlledRobot otherRobot : controlledRobotList) {
+                otherRobot.setSelected(false);
+            }
+            new_robot.setSelected(true);
             controlledRobotList.add(new_robot);
 
             robotImageView.setOnMouseClicked(mouseEvent -> {
-                if (!isPlaying) {
-                    // Display an error message to the user
-                    showSimulationAlert();
-                    return;
-                }
                 for (ControlledRobot otherRobot : controlledRobotList) {
                     otherRobot.setSelected(false);
                 }
@@ -261,6 +261,11 @@ public class HelloController {
 
     @FXML
     public void onMoveUp(ActionEvent actionEvent) {
+        if (!isPlaying) {
+            // Display an error message to the user
+            showSimulationAlert();
+            return;
+        }
         for (ControlledRobot robot : controlledRobotList) {
             if (robot.isSelected()) {
                 if(controlledRobotIndex!=null){
@@ -272,6 +277,11 @@ public class HelloController {
 
     @FXML
     public void onChangeAngle(ActionEvent actionEvent) {
+        if (!isPlaying) {
+            // Display an error message to the user
+            showSimulationAlert();
+            return;
+        }
         for (ControlledRobot robot : controlledRobotList) {
             if (robot.isSelected()) {
                 controlledRobotIndex.turn();
@@ -281,6 +291,11 @@ public class HelloController {
 
     @FXML
     public void onChangeAngleReverse(ActionEvent actionEvent) {
+        if (!isPlaying) {
+            // Display an error message to the user
+            showSimulationAlert();
+            return;
+        }
         for (ControlledRobot robot : controlledRobotList) {
             if (robot.isSelected()) {
                 controlledRobotIndex.turnReverse();
@@ -360,11 +375,6 @@ public class HelloController {
                                 return;
                             }
                             robotImageView.setOnMouseClicked(mouseEvent -> {
-                                if (!isPlaying) {
-                                    // Display an error message to the user
-                                    showSimulationAlert();
-                                    return;
-                                }
                                 for (ControlledRobot otherRobot : controlledRobotList) {
                                     otherRobot.setSelected(false);
                                 }
@@ -385,7 +395,6 @@ public class HelloController {
                         }
 
                 }
-
                 for (ConfigurationLoader.Obstacle obstacle : config.getObstacles()) {
                     ImageView bushImageView = new ImageView(bushImage);
                     bushImageView.getProperties().put("type", "obstacle");
@@ -403,10 +412,6 @@ public class HelloController {
 
                     gameField.getChildren().add(bushImageView);
                 }
-
-                // Redraw the environment
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public abstract class AbstractRobot implements Robot {
     private HelloController controller;
-    private boolean messageFlag = false;
+    public boolean messageFlag = false;
     private ImageView view;
     public AbstractRobot(HelloController controller, ImageView view) {
         this.controller = controller;
@@ -26,8 +26,8 @@ public abstract class AbstractRobot implements Robot {
 
     public void notifyController(Position pos, Log.MovementType type, int angle ) {
         if (!messageFlag){
-        controller.addMessage(pos, this,  type, angle );
-        messageFlag = true;
+            controller.addMessage(pos, this,  type, angle );
+            messageFlag = true;
         }
     }
 

@@ -27,11 +27,19 @@ public class ViewPainter {
         for (NotifyMessage msg : messages) {
             switch (msg.getMessage()) {
                 case MOVE:
-                case TURN:
                     updateRobotPosition(msg.getRobot(), msg.getRobot().getPosition());
                     break;
+                case TURN:
+                    updateRobotAngle(msg.getRobot());
+                    break;
+
             }
         }
+    }
+
+    private static void updateRobotAngle(Robot robot) {
+        robot.getImageView().setRotate(robot.angle());
+        robot.toggleFlag();
     }
 
     private static void updateRobotPosition(Robot robot, Position pos) {
