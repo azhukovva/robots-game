@@ -1,4 +1,4 @@
-package vut.ija2023.common;
+package vut.ija2023.common.config;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

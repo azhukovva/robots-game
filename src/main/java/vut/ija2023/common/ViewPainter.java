@@ -55,18 +55,4 @@ public class ViewPainter {
         }
         System.err.println("Problem in updateRobotPosition function");
     }
-
-    private static void addNewRobot(Robot robot, Position pos) {
-        ImageView view = robot.getImageView();
-        if (view == null) {
-            System.err.println("Problem in addNewRobt function");
-            // Log error or throw an exception
-            return;
-        }
-        double x = pos.getRow() * cellWidth + (cellWidth - view.getFitWidth()) / 2;
-        double y = pos.getCol() * cellHeight + (cellHeight - view.getFitHeight()) / 2;
-        view.setLayoutX(x);
-        view.setLayoutY(y);
-        gameField.getChildren().add(view);
-    }
 }

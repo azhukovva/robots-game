@@ -1,11 +1,10 @@
 package vut.ija2023.room;
 
 import javafx.scene.image.ImageView;
-import vut.ija2023.HelloController;
+import vut.ija2023.BotsController;
 import vut.ija2023.common.AbstractRobot;
 import vut.ija2023.common.Environment;
-import vut.ija2023.common.Log;
-import vut.ija2023.common.Log.MovementType;
+import vut.ija2023.common.log.Log.MovementType;
 import vut.ija2023.common.Robot;
 import vut.ija2023.enviroment.Position;
 
@@ -14,14 +13,14 @@ public class AutonomusRobot extends AbstractRobot implements Robot {
     private Position position;
     private Environment environment;
     private int angle = 0;
-    private AutonomusRobot(Environment env, Position pos, HelloController controller, ImageView view)
+    private AutonomusRobot(Environment env, Position pos, BotsController controller, ImageView view)
     {
         super(controller, view);
         this.environment = env;
         this.position = pos;
     }
 
-    public static AutonomusRobot create(Environment env, Position pos, HelloController controller, ImageView view) {
+    public static AutonomusRobot create(Environment env, Position pos, BotsController controller, ImageView view) {
         if (env == null || pos == null) {
             return null;
         }

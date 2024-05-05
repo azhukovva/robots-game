@@ -1,7 +1,7 @@
 package vut.ija2023.common;
 
 import vut.ija2023.enviroment.Position;
-import vut.ija2023.common.Log.MovementType;
+import vut.ija2023.common.log.Log.MovementType;
 
 public class NotifyMessage {
     private Position pos;

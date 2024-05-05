@@ -1,4 +1,6 @@
-package vut.ija2023.common;
+package vut.ija2023.common.log;
+import vut.ija2023.common.NotifyMessage;
+import vut.ija2023.common.Robot;
 import vut.ija2023.enviroment.Position;
 
 import java.io.File;
@@ -8,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
-import vut.ija2023.common.Log.MovementType;
+import vut.ija2023.common.log.Log.MovementType;
 
 public class Logger {
 

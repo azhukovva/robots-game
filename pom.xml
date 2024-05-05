@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>vut</groupId>
-  <artifactId>ija2023</artifactId>
+  <artifactId>xshish02</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>ija2023</name>
+  <name>xshish02</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -63,7 +63,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>vut.ija2023/vut.ija2023.HelloApplication</mainClass>
+              <mainClass>vut.ija2023/vut.ija2023.BotsApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>

@@ -1,8 +1,5 @@
-package vut.ija2023.common;
+package vut.ija2023.common.config;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import vut.ija2023.enviroment.Position;

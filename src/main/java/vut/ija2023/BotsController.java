@@ -17,6 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import vut.ija2023.common.*;
+import vut.ija2023.common.config.ConfigurationLoader;
+import vut.ija2023.common.log.Log;
+import vut.ija2023.common.log.Logger;
 import vut.ija2023.enviroment.Position;
 import vut.ija2023.room.AutonomusRobot;
 import vut.ija2023.room.ControlledRobot;
@@ -24,10 +27,9 @@ import vut.ija2023.room.Room;
 import javafx.scene.control.Alert;
 
 
-import java.io.InputStream;
 import java.util.Random;
 
-public class HelloController {
+public class BotsController {
 
     private List<NotifyMessage> messagesList = new ArrayList<NotifyMessage>();
     private List<AutonomusRobot> autoRobotList = new ArrayList<AutonomusRobot>();

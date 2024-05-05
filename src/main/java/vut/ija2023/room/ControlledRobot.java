@@ -1,10 +1,10 @@
 package vut.ija2023.room;
 
 import javafx.scene.image.ImageView;
-import vut.ija2023.HelloController;
+import vut.ija2023.BotsController;
 import vut.ija2023.common.AbstractRobot;
 import vut.ija2023.common.Environment;
-import vut.ija2023.common.Log;
+import vut.ija2023.common.log.Log;
 import vut.ija2023.common.Robot;
 import vut.ija2023.enviroment.Position;
 
@@ -20,13 +20,13 @@ public class ControlledRobot extends AbstractRobot implements Robot {
         this.selected = selected;
     }
 
-    private ControlledRobot(Environment env, Position pos, HelloController controller, ImageView view) {
+    private ControlledRobot(Environment env, Position pos, BotsController controller, ImageView view) {
         super(controller, view);
         this.environment = env;
         this.position = pos;
     }
 
-    public static ControlledRobot create(Environment env, Position pos, HelloController controller, ImageView view) {
+    public static ControlledRobot create(Environment env, Position pos, BotsController controller, ImageView view) {
         if (env == null || pos == null) {
             return null;
         }

@@ -1,4 +1,4 @@
-package vut.ija2023.common;
+package vut.ija2023.common.log;
 import vut.ija2023.enviroment.Position;
 
 public class Log {
