@@ -466,6 +466,7 @@ public class BotsController {
                 System.out.println(config);
 
                 env.clear();
+                onNewGame(actionEvent);
 
                 for (ConfigurationLoader.Robot robot : config.getRobots()) {
                     ImageView robotImageView = createRobotImageView();
