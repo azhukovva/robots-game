@@ -1,3 +1,3 @@
 run:
-	mvn packages
+	mvn package
 	mvn javafx:run
