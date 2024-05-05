@@ -12,6 +12,10 @@ import java.util.Map;
 import java.util.ArrayList;
 import vut.ija2023.common.log.Log.MovementType;
 
+/**
+ * Handles the logging of robot movements in the system.
+ * This includes storing and printing logs for each robot.
+ */
 public class Logger {
 
     // Map to store messages for each robot
@@ -20,6 +24,11 @@ public class Logger {
     private Map<Robot, MovementType> previousMovementType = new HashMap<>();
     private int stepCount = 0;
 
+    /**
+     * Logs the given list of notify messages.
+     *
+     * @param messages the list of notify messages
+     */
     public void log(List<NotifyMessage> messages) {
         for (NotifyMessage msg : messages) {
             handleMessage(msg);
@@ -27,6 +36,11 @@ public class Logger {
         stepCount++;
     }
 
+    /**
+     * Handles a single notify message.
+     *
+     * @param notifyMessage the notify message to handle
+     */
     public void handleMessage(NotifyMessage notifyMessage) {
         Position pos = notifyMessage.getPos();
         Robot robot = notifyMessage.getRobot();
@@ -52,6 +66,9 @@ public class Logger {
         }
     }
 
+    /**
+     * Prints the logs for all robots.
+     */
     public void printLogs() {
         File directory = new File("./logs");
         if (!directory.exists()) {

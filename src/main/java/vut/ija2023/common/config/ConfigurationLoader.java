@@ -8,8 +8,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Handles the loading of game configurations from JSON files.
+ * This includes deserializing Position objects and loading robot and obstacle configurations.
+ */
 public class ConfigurationLoader {
 
+    /**
+     * Loads a game configuration from a JSON file.
+     *
+     * @param filePath the path of the JSON file
+     * @return the loaded game configuration
+     * @throws IOException if an input or output exception occurred
+     */
     public static Configuration loadConfiguration(String filePath) throws IOException {
         ObjectMapper mapper = new ObjectMapper(); // functionality for reading and writing JSON
         SimpleModule module = new SimpleModule();
@@ -21,6 +32,10 @@ public class ConfigurationLoader {
         return config;
     }
 
+    /**
+     * Represents a game configuration.
+     * A game configuration includes a list of robots and a list of obstacles.
+     */
     public static class Configuration {
         private List<Robot> robots;
         private List<Obstacle> obstacles;
@@ -40,16 +55,12 @@ public class ConfigurationLoader {
         public void setObstacles(List<Obstacle> obstacles) {
             this.obstacles = obstacles;
         }
-
-        @Override
-        public String toString() {
-            return "Configuration{" +
-                    "robots=" + robots +
-                    ", obstacles=" + obstacles +
-                    '}';
-        }
     }
 
+    /**
+     * Represents a robot configuration.
+     * A robot configuration includes a position, an angle, and a type.
+     */
     public static class Robot {
         private Position position;
         private int angle;
@@ -77,17 +88,12 @@ public class ConfigurationLoader {
         public void setType(String type) {
             this.type = type;
         }
-
-        @Override
-        public String toString() {
-            return "Robot{" +
-                    "position=" + position +
-                    ", angle=" + angle +
-                    ", type=" + type +
-                    '}';
-        }
     }
 
+    /**
+     * Represents an obstacle configuration.
+     * An obstacle configuration includes a position.
+     */
     public static class Obstacle {
         private Position position;
 
@@ -98,15 +104,5 @@ public class ConfigurationLoader {
         public void setPosition(Position position) {
             this.position = position;
         }
-
-        @Override
-        public String toString() {
-            return "Obstacle{" +
-                    "position=" + position +
-                    '}';
-        }
     }
-
-
-
 }

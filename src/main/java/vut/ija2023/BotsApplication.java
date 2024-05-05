@@ -7,9 +7,25 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The main application class for the Robots:3 application.
+ */
 public class BotsApplication extends Application {
     private BotsController botsController;
 
+    /**
+     * The main entry point for the application.
+     * @param args The command line arguments (not used).
+     */
+    public static void main(String[] args) {
+        launch();
+    }
+
+    /**
+     * Initializes the application.
+     * @param stage The primary stage for the application.
+     * @throws IOException If an error occurs while loading the FXML file.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(BotsApplication.class.getResource("hello-view.fxml"));
@@ -21,14 +37,12 @@ public class BotsApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Called when the application is about to close.
+     */
     @Override
     public void stop() {
-        // This method is called when the application is about to close
         botsController.logger.printLogs();  // Method in Logger to print all accumulated logs
         System.out.println("Application is closing.");
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }
