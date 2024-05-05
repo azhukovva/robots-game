@@ -66,7 +66,6 @@ public class ControlledRobot extends AbstractRobot implements Robot {
         angle = (angle - 1 + 8) % 8; // Add 8 before taking modulus to handle negative values
         rotateImageView();
     }
-
     /**
      * Ověřuje, zda je možný přesun na vedlejší políčko ve směru natočení robota. Vrací výsledek ověření.
      *

@@ -241,7 +241,6 @@ public class HelloController {
         assert obstacle != null : "fx:id=\"obstacle\" was not injected: check your FXML file 'hello-view.fxml'.";
         assert robot != null : "fx:id=\"robot\" was not injected: check your FXML file 'hello-view.fxml'.";
 
-
         playIconView.setFitHeight(20.0);
         playIconView.setFitWidth(33.0);
         playIconView.setPickOnBounds(true);
@@ -264,7 +263,7 @@ public class HelloController {
     public void onMoveUp(ActionEvent actionEvent) {
         for (ControlledRobot robot : controlledRobotList) {
             if (robot.isSelected()) {
-                if (controlledRobotIndex != null) {
+                if(controlledRobotIndex!=null){
                     controlledRobotIndex.move();
                 }
             }
