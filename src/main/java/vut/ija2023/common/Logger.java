@@ -1,11 +1,14 @@
 package vut.ija2023.common;
 import vut.ija2023.enviroment.Position;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import vut.ija2023.common.Log.MovementType;
-import java.util.stream.Collectors;
 
 public class Logger {
 
@@ -48,10 +51,24 @@ public class Logger {
     }
 
     public void printLogs() {
-        robotMessages.forEach((robot, logs) -> {
-            System.out.println("Logs for Robot: " + robot);
-            logs.forEach(log -> System.out.println("Step: " + log.getStepCount() + ", Position: " + log.getStartingPosition() + ", Angle: " + log.getAngle() + ", Movement: " + log.getMovementType()));
-        });
+        File directory = new File("./logs");
+        if (!directory.exists()) {
+            directory.mkdir(); // Create the directory
+        }
+        File logFile = new File("./logs/robot_logs.txt"); // Specify path relative to the project root
+        try (PrintWriter writer = new PrintWriter(logFile)) {
+            robotMessages.forEach((robot, logs) -> {
+                writer.println("Logs for Robot: " + robot);
+                logs.forEach(log -> writer.println("Step: " + log.getStepCount() +
+                        ", Position: " + log.getStartingPosition() +
+                        ", Angle: " + log.getAngle()*45 +
+                        ", Movement: " + log.getMovementType()));
+                writer.println("Final step count: " + stepCount);
+            });
+        } catch (FileNotFoundException e) {
+            System.err.println("Error writing to log file: " + e.getMessage());
+        }
     }
 }
+
 
