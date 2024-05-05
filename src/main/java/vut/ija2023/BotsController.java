@@ -166,7 +166,6 @@ public class BotsController {
     @FXML
     void onAddRobot(ActionEvent event) {
         // Calculate the width and height of each cell in the grid
-        gameField.requestFocus();
         ImageView robotImageView = createRobotImageView();
 
         Position pos;
@@ -257,12 +256,10 @@ public class BotsController {
             ViewPainter.setGameField(gameField, 8);
             cellWidth = gameField.getWidth() / 8;
             cellHeight = gameField.getHeight() / 8;
-            env = Room.create((int) cellHeight, (int) cellWidth);
+            env = Room.create((int) (gameField.getHeight() / cellHeight)  , (int) (gameField.getWidth() / cellWidth));
             setupTimeline();
-            gameField.setFocusTraversable(true);
-            gameField.requestFocus();// Ensure the gameField can receive key events
 
-            gameField.setOnKeyPressed(event -> {
+            gameField.getScene().setOnKeyPressed(event -> {
                 switch (event.getCode()) {
                     case W: // Assuming 'W' is for moving up
                         onMoveUp(new ActionEvent());
