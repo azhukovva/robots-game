@@ -260,7 +260,6 @@ public class BotsController {
             setupTimeline();
 
             gameField.getScene().setOnKeyPressed(event -> {
-                System.err.println(event.getCode());
                 switch (event.getCode()) {
                     case W: // Assuming 'W' is for moving up
                         onMoveUp(new ActionEvent());
