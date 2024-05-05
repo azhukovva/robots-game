@@ -260,17 +260,15 @@ public class BotsController {
             setupTimeline();
 
             gameField.getScene().setOnKeyPressed(event -> {
+                System.err.println(event.getCode());
                 switch (event.getCode()) {
                     case W: // Assuming 'W' is for moving up
-                    case UP: // Arrow up for moving up
                         onMoveUp(new ActionEvent());
                         break;
                     case A: // Assuming 'A' is for turning left
-                    case LEFT: // Arrow left for turning left
                         onChangeAngleReverse(new ActionEvent());
                         break;
                     case D: // Assuming 'D' is for turning right
-                    case RIGHT: // Arrow right for turning right
                         onChangeAngle(new ActionEvent());
                         break;
                     default:

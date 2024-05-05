@@ -73,14 +73,21 @@ public class AutonomusRobot extends AbstractRobot implements Robot {
 
     @Override
     public int angle() {
+
         return this.angle*45;
     }
 
     public void turn() {
+        if (super.messageFlag) {
+            return;
+        }
         super.notifyController(position, MovementType.TURN, angle);
         angle = (angle + 1) % 8;
     }
     public void turnReverse() {
+        if (super.messageFlag) {
+            return;
+        }
         super.notifyController(position, MovementType.TURN, angle);
         angle = (angle - 1) % 8;
     }
